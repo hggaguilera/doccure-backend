@@ -1,0 +1,14 @@
+version: '3.1'
+services:
+  pg:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=razorstudio
+      - POSTGRES_USER=razor
+      - POSTGRES_DB=spydental
+    volumes:
+      - "./db/data:/var/lib/postgresql/data"
+      - "./db/init:/docker-entrypoint-initdb.d"

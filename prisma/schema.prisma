@@ -1,0 +1,216 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  active
+  inactive
+}
+
+enum PrimaryPhone {
+  yes
+  no
+}
+
+enum PhoneNumberType {
+  mobile
+  home
+  work
+  other
+}
+
+model Address {
+  // Standardized Prefix Fields
+  id                 String   @id @default(uuid())
+  // Model-Specific Fields
+  countryId          String   @map("country_id")
+  personId           String   @map("person_id")
+  addressLineOne     String   @map("address_line_one")
+  addressLineTwo     String?  @map("address_line_two")
+  stateOrCity        String   @map("state_or_city")
+  townOrMunicipality String?  @map("town_or_municipality")
+  zipCode            String?   @map("zip_code")
+  // Standardized Suffix Fields
+  status             Status   @default(active)
+  isDeleted          Boolean  @default(false) @map("is_deleted")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+  country            Country  @relation(name: "Address.countryId", fields: [countryId], references: [id])
+  person             Person   @relation(name: "Address.personId", fields: [personId], references: [id])
+
+  @@map("addresses")
+}
+
+model Country {
+  // Standardized Prefix Fields
+  id                String    @id @default(uuid())
+  // Model-Specific Fields
+  abbreviationTwo   String    @map("abbreviation_two")
+  abbreviationThree String    @map("abbreviation_three")
+  name              String
+  // Standardized Suffix Fields
+  status            Status    @default(active)
+  isDeleted         Boolean   @default(false) @map("is_deleted")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  // Child Relationships
+  addresses         Address[] @relation(name: "Address.countryId")
+
+  @@map("countries")
+}
+
+model Person {
+  // Standardized Prefix Fields
+  id           String        @id @default(uuid())
+  // Model-Specific Fields
+  firstName    String        @map("first_name")
+  middleName   String?       @map("middle_name")
+  lastName     String        @map("last_name")
+  email        String?
+  isSystemUser Boolean       @default(false) @map("is_system_user")
+  // Standardized Suffix Fields
+  status       Status        @default(active)
+  isDeleted    Boolean       @default(false) @map("is_deleted")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  // Child Relationships
+  addresses    Address[]     @relation(name: "Address.personId")
+  phoneNumbers PhoneNumber[] @relation(name: "PhoneNumber.personId")
+  invoices     Invoice[]     @relation(name: "Invoice.clientId")
+  user         User?         @relation(name: "User.personId")
+  doctor       Doctor?       @relation(name: "Doctor.personId")
+
+  @@map("persons")
+}
+
+model PhoneNumber {
+  // Standardized Prefix Fields
+  id          String          @id @default(uuid())
+  // Model-Specific Fields
+  isPrimary   PrimaryPhone    @default(yes) @map("is_primary")
+  type        PhoneNumberType @default(mobile)
+  personId    String          @map("person_id")
+  contryCode  String          @map("country_code")
+  phoneNumber String          @unique @map("phone_number")
+  // Standardized Suffix Fields
+  status      Status          @default(active)
+  isDeleted   Boolean         @default(false) @map("is_deleted")
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  // Parent Relationships
+  person      Person          @relation(name: "PhoneNumber.personId", fields: [personId], references: [id])
+
+  @@map("phone_numbers")
+}
+
+model User {
+  // Standardized Prefix Fields
+  id                     String        @id @default(uuid())
+  // Model-Specific Fields
+  personId               String        @unique @map("person_id")
+  password               String
+  // Standardized Suffix Fields
+  status                 Status        @default(active)
+  isDeleted              Boolean       @default(false) @map("is_deleted")
+  createdAt              DateTime      @default(now()) @map("created_at")
+  updatedAt              DateTime      @updatedAt @map("updated_at")
+  // Parent Relationships
+  person                 Person        @relation(name: "User.personId", fields: [personId], references: [id])
+
+  @@map("users")
+}
+
+model Doctor {
+  // Standardized Prefix Fields
+  id             String        @id @default(uuid())
+  // Model-Specific Fields
+  personId       String        @unique @map("person_id")
+  specialization String
+  // Standardized Suffix Fields
+  status         Status        @default(active)
+  isDeleted      Boolean       @default(false) @map("is_deleted")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  // Parent Relationships
+  person         Person        @relation(name: "Doctor.personId", fields: [personId], references: [id])
+  // Child Relationships
+  appointments   Appointment[] @relation(name: "Appointment.doctorId")
+
+  @@map("doctors")
+}
+
+model Specialties {
+  // Standardized Prefix Fields
+  id                 String       @id @default(uuid())
+  // Model-Specific Fields
+  serviceName        String       @unique @map("service_name")
+  serviceDescription String       @map("service_description")
+  price              Float
+  // Standardized Suffix Fields
+  status             Status       @default(active)
+  isDeleted          Boolean      @default(false) @map("is_deleted")
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt @map("updated_at")
+  // Child Relationships
+  appointment        Appointment? @relation(name: "Appointment.serviceId")
+
+  @@map("specialties")
+}
+
+model Appointment {
+  // Standardized Prefix Fields
+  id          String   @id @default(uuid())
+  // Model-Specific Fields
+  patientName String   @map("patient_name")
+  phoneNumber String   @map("phone_number")
+  email       String
+  doctorId    String   @map("doctor_id")
+  serviceId   String   @unique @map("service_id")
+  date        DateTime
+  // Standardized Suffix Fields
+  status      Status   @default(active)
+  isDeleted   Boolean  @default(false) @map("is_deleted")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  // Parent Relationships
+  doctor      Doctor   @relation(name: "Appointment.doctorId", fields: [doctorId], references: [id])
+  service     Specialties  @relation(name: "Appointment.serviceId", fields: [serviceId], references: [id])
+  // Child Relationships
+  invoice     Invoice? @relation(name: "Invoice.appointmentId")
+
+  @@map("appointments")
+}
+
+model Invoice {
+  // Standarized Prefix Fields
+  id            String        @id @default(uuid())
+  // Model Specific Fields
+  number        String        @unique
+  summary       String?
+  date          DateTime
+  tax           Float
+  clientId      String        @map("client_id")
+  appointmentId String        @unique @map("appointment_id")
+  // Parent Relationships
+  client        Person        @relation(name: "Invoice.clientId", fields: [clientId], references: [id])
+  appointment   Appointment   @relation(name: "Invoice.appointmentId", fields: [appointmentId], references: [id])
+  // Child Relationships
+  items         InvoiceItem[] @relation(name: "InvoiceItem.invoiceId")
+}
+
+model InvoiceItem {
+  // Standarized Prefix Fields
+  id        String  @id @default(uuid())
+  // Model Specific Fields
+  invoiceId String  @map("invoice_id")
+  // Parent Relationships
+  invoice   Invoice @relation(name: "InvoiceItem.invoiceId", fields: [invoiceId], references: [id])
+}
