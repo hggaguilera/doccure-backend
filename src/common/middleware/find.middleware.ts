@@ -14,7 +14,6 @@ export function FindRecordsMiddleware<
       params.action === 'findUnique'
     ) {
       params.args.where.isDeleted = false;
-      console.log(params.args);
     }
     return next(params);
   };

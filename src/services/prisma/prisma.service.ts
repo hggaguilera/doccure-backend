@@ -1,6 +1,6 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { FindRecordsMiddleware } from 'src/common/middleware/find.middleware';
+import { FindRecordsMiddleware } from '../../common/middleware/find.middleware';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
