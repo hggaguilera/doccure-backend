@@ -1,14 +1,24 @@
 import { PrismaClient } from '@prisma/client';
 import countries from './data/countries';
+import specialties from './data/specialties';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const records = await prisma.country.createMany({
+  const { count } = await prisma.country.deleteMany();
+  console.log('\n', `\u{1F3AF} ${count} records were deleted`);
+
+  const createdCountries = await prisma.country.createMany({
     data: countries,
     skipDuplicates: true,
   });
-  console.log(`New ${records.count} were created \u{1F3AF}`);
+  const createdSpecialties = await prisma.specialty.createMany({
+    data: specialties,
+    skipDuplicates: true,
+  });
+
+  const records = createdCountries.count + createdSpecialties.count;
+  console.log('\n', `\u{1F3AF} ${records} new records were created`);
 }
 
 main()

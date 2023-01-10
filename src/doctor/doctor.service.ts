@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
-import { Doctor, Prisma } from '@prisma/client';
+import { Person, Doctor, Prisma } from '@prisma/client';
+
+type DoctorCreateInput = Prisma.PersonCreateInput & {
+  specialtyId: string;
+};
 
 @Injectable()
 export class DoctorService {
@@ -27,5 +31,30 @@ export class DoctorService {
       where,
       orderBy,
     });
+  }
+
+  async createDoctor(data: DoctorCreateInput) {
+    const doctorInputWithoutSpecialty = Object.assign({}, data);
+    delete doctorInputWithoutSpecialty.specialtyId;
+
+    const person = await this.prisma.person.create({
+      data: doctorInputWithoutSpecialty,
+    });
+    const doctor = await this.prisma.doctor.create({
+      data: { personId: person.id },
+    });
+    const specialty = await this.prisma.specialty.findFirst({
+      where: { id: data.specialtyId },
+    });
+    await this.prisma.doctorsWithSpecialties.create({
+      data: { doctorId: doctor.id, specialtyId: data.specialtyId },
+    });
+
+    return {
+      firstName: person.firstName,
+      lastName: person.lastName,
+      email: person.email,
+      specialty: specialty.specialtyName,
+    };
   }
 }
