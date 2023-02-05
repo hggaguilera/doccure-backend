@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
 import { DoctorModule } from './doctor/doctor.module';
 import { AppointmentModule } from './appointment/appointment.module';
+import { SpecialtyModule } from './specialty/specialty.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AppointmentModule } from './appointment/appointment.module';
     }),
     DoctorModule,
     AppointmentModule,
+    SpecialtyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

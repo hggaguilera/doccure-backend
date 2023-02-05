@@ -30,3 +30,10 @@ export type DoctorWithSpecialties = {
   status: string;
   specializations: string[];
 };
+
+export type Specialties = {
+  id: string;
+  specialtyName: string;
+  specialtyDescription: string;
+  status: 'active' | 'inactive';
+};
