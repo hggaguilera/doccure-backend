@@ -1,22 +1,25 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
-import { Doctor as DoctorModel, Prisma } from '@prisma/client';
-
-type DoctorCreateInput = Prisma.PersonCreateInput & {
-  specialtyId: string;
-};
+import { DoctorCreateInput, DoctorWithSpecialties } from 'src/types';
 
 @Controller()
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
+  @Get('doctor/:id')
+  async getDoctorById(@Param('id') id: string): Promise<DoctorWithSpecialties> {
+    return this.doctorService.doctor({ id: id });
+  }
+
   @Get('doctors')
-  async getDoctorsList(): Promise<DoctorModel[]> {
+  async getDoctorsList(): Promise<DoctorWithSpecialties[]> {
     return this.doctorService.doctors({ where: { status: 'active' } });
   }
 
   @Post('doctor')
-  async createDoctor(@Body() personData: DoctorCreateInput) {
+  async createDoctor(
+    @Body() personData: DoctorCreateInput,
+  ): Promise<DoctorWithSpecialties> {
     return this.doctorService.createDoctor(personData);
   }
 }

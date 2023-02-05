@@ -10,8 +10,7 @@ export function FindRecordsMiddleware<
     if (
       params.action === 'findMany' ||
       params.action === 'findFirst' ||
-      params.action === 'findRaw' ||
-      params.action === 'findUnique'
+      params.action === 'findRaw'
     ) {
       params.args.where.isDeleted = false;
     }

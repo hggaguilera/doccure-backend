@@ -43,8 +43,8 @@ model Address {
   isDeleted          Boolean  @default(false) @map("is_deleted")
   createdAt          DateTime @default(now()) @map("created_at")
   updatedAt          DateTime @updatedAt @map("updated_at")
-  country            Country  @relation(name: "Address.countryId", fields: [countryId], references: [id])
-  person             Person   @relation(name: "Address.personId", fields: [personId], references: [id])
+  country            Country  @relation(name: "Address.countryId", fields: [countryId], references: [id], onDelete: Cascade)
+  person             Person   @relation(name: "Address.personId", fields: [personId], references: [id], onDelete: Cascade)
 
   @@map("addresses")
 }
@@ -74,7 +74,7 @@ model Person {
   firstName    String        @map("first_name")
   middleName   String?       @map("middle_name")
   lastName     String        @map("last_name")
-  email        String?
+  email        String?       @unique
   isSystemUser Boolean       @default(false) @map("is_system_user")
   // Standardized Suffix Fields
   status       Status        @default(active)
@@ -98,7 +98,7 @@ model PhoneNumber {
   isPrimary   PrimaryPhone    @default(yes) @map("is_primary")
   type        PhoneNumberType @default(mobile)
   personId    String          @map("person_id")
-  contryCode  String          @map("country_code")
+  countryCode String          @map("country_code")
   phoneNumber String          @unique @map("phone_number")
   // Standardized Suffix Fields
   status      Status          @default(active)
@@ -106,7 +106,7 @@ model PhoneNumber {
   createdAt   DateTime        @default(now()) @map("created_at")
   updatedAt   DateTime        @updatedAt @map("updated_at")
   // Parent Relationships
-  person      Person          @relation(name: "PhoneNumber.personId", fields: [personId], references: [id])
+  person      Person          @relation(name: "PhoneNumber.personId", fields: [personId], references: [id], onDelete: Cascade)
 
   @@map("phone_numbers")
 }
@@ -132,6 +132,7 @@ model Doctor {
   // Standardized Prefix Fields
   id              String                   @id @default(uuid())
   // Model-Specific Fields
+  prefix          String
   personId        String                   @unique @map("person_id")
   // Standardized Suffix Fields
   status          Status                   @default(active)
@@ -139,7 +140,7 @@ model Doctor {
   createdAt       DateTime                 @default(now()) @map("created_at")
   updatedAt       DateTime                 @updatedAt @map("updated_at")
   // Parent Relationships
-  person          Person                   @relation(name: "Doctor.personId", fields: [personId], references: [id])
+  person          Person                   @relation(name: "Doctor.personId", fields: [personId], references: [id], onDelete: Cascade)
   // Child Relationships
   appointments    Appointment[]            @relation(name: "Appointment.doctorId")
   specializations DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
@@ -174,8 +175,8 @@ model DoctorsWithSpecialties {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
   // Parent Relationships
-  doctor      Doctor    @relation(name: "DoctorsWithSpecialties.doctorId", fields: [doctorId], references: [id])
-  specialty   Specialty @relation(name: "DoctorsWithSpecialties.specialtyId", fields: [specialtyId], references: [id])
+  doctor      Doctor    @relation(name: "DoctorsWithSpecialties.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
+  specialty   Specialty @relation(name: "DoctorsWithSpecialties.specialtyId", fields: [specialtyId], references: [id], onDelete: Cascade)
 
   @@id([doctorId, specialtyId])
   @@map("doctor_with_specialties")
@@ -187,6 +188,7 @@ model Service {
   // Model-Specific Fields
   serviceName        String       @unique @map("service_name")
   serviceDescription String       @map("service_description")
+  serviceDuration    Int          @map("service_duration")
   price              Float
   // Standardized Suffix Fields
   status             Status       @default(active)
@@ -215,8 +217,8 @@ model Appointment {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   // Parent Relationships
-  doctor      Doctor   @relation(name: "Appointment.doctorId", fields: [doctorId], references: [id])
-  service     Service  @relation(name: "Appointment.serviceId", fields: [serviceId], references: [id])
+  doctor      Doctor   @relation(name: "Appointment.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
+  service     Service  @relation(name: "Appointment.serviceId", fields: [serviceId], references: [id], onDelete: Cascade)
   // Child Relationships
   invoice     Invoice? @relation(name: "Invoice.appointmentId")
 
@@ -234,8 +236,8 @@ model Invoice {
   clientId      String        @map("client_id")
   appointmentId String        @unique @map("appointment_id")
   // Parent Relationships
-  client        Person        @relation(name: "Invoice.clientId", fields: [clientId], references: [id])
-  appointment   Appointment   @relation(name: "Invoice.appointmentId", fields: [appointmentId], references: [id])
+  client        Person        @relation(name: "Invoice.clientId", fields: [clientId], references: [id], onDelete: Cascade)
+  appointment   Appointment   @relation(name: "Invoice.appointmentId", fields: [appointmentId], references: [id], onDelete: Cascade)
   // Child Relationships
   items         InvoiceItem[] @relation(name: "InvoiceItem.invoiceId")
 }
@@ -246,5 +248,5 @@ model InvoiceItem {
   // Model Specific Fields
   invoiceId String  @map("invoice_id")
   // Parent Relationships
-  invoice   Invoice @relation(name: "InvoiceItem.invoiceId", fields: [invoiceId], references: [id])
+  invoice   Invoice @relation(name: "InvoiceItem.invoiceId", fields: [invoiceId], references: [id], onDelete: Cascade)
 }
