@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import countries from './data/countries';
 import specialties from './data/specialties';
 import doctors from './data/doctors';
+import services from './data/services';
 import * as bcrypt from 'bcrypt';
 
 async function hashPassword(password: string) {
@@ -16,11 +17,13 @@ async function main() {
   const deletedDoctorWithSpecialties =
     await prisma.doctorsWithSpecialties.deleteMany();
   const deletedUsers = await prisma.person.deleteMany();
+  const deletedServices = await prisma.service.deleteMany();
 
   const deletedRecords =
     deletedCountries.count +
     deletedDoctorWithSpecialties.count +
-    deletedUsers.count;
+    deletedUsers.count +
+    deletedServices.count;
 
   console.log('\n', `\u{1F3AF} ${deletedRecords} records were deleted`);
 
@@ -30,6 +33,10 @@ async function main() {
   });
   const createdSpecialties = await prisma.specialty.createMany({
     data: specialties,
+    skipDuplicates: true,
+  });
+  const createdServices = await prisma.service.createMany({
+    data: services,
     skipDuplicates: true,
   });
 
@@ -46,7 +53,8 @@ async function main() {
     });
   }
 
-  const records = createdCountries.count + createdSpecialties.count;
+  const records =
+    createdCountries.count + createdSpecialties.count + createdServices.count;
   console.log('\n', `\u{1F3AF} ${records} new records were created`);
 }
 

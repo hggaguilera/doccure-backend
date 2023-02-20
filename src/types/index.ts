@@ -22,6 +22,8 @@ export type DoctorUpdateInput = {
 
 export type DoctorWithSpecialties = {
   id: string;
+  personId: string;
+  prefix: string;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -36,4 +38,14 @@ export type Specialties = {
   specialtyName: string;
   specialtyDescription: string;
   status: 'active' | 'inactive';
+};
+
+export type AppointmentInput = {
+  name: string;
+  email: string;
+  countryCode: string;
+  phoneNumber: string;
+  doctor: string;
+  service: string;
+  date: string;
 };

@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
-import {
-  DoctorCreateInput,
-  DoctorUpdateInput,
-  DoctorWithSpecialties,
-} from 'src/types';
+import { DoctorCreateInput, DoctorWithSpecialties } from '../types';
 
 @Injectable()
 export class DoctorService {
@@ -31,7 +27,9 @@ export class DoctorService {
     );
 
     return {
-      id: doctor?.personId,
+      id: doctor?.id,
+      personId: doctor?.personId,
+      prefix: doctor?.prefix,
       firstName: doctor?.person?.firstName,
       middleName: doctor?.person?.middleName,
       lastName: doctor?.person?.lastName,
@@ -72,7 +70,9 @@ export class DoctorService {
         (specialty) => specialty?.specialty?.specialtyName,
       );
       return {
-        id: doctor?.personId,
+        id: doctor?.id,
+        personId: doctor?.personId,
+        prefix: doctor?.prefix,
         firstName: doctor?.person?.firstName,
         middleName: doctor?.person?.middleName,
         lastName: doctor?.person?.lastName,
