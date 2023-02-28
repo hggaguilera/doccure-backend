@@ -49,3 +49,22 @@ export type AppointmentInput = {
   service: string;
   date: string;
 };
+
+export type Service = {
+  id: string;
+  serviceName: string;
+  serviceDescription: string;
+  price: number;
+  status: string;
+};
+
+export type Appointment = {
+  id: string;
+  doctor: string;
+  doctorEmail: string;
+  patient: string;
+  service: string;
+  date: string | Date;
+  status: string;
+  message?: string;
+};
