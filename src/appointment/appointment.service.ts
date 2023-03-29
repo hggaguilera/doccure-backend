@@ -81,6 +81,8 @@ export class AppointmentService {
       };
     }
 
+    // await this.prisma
+
     appointment = await this.prisma.appointment.create({
       data: {
         personId: person.id,

@@ -10,6 +10,13 @@ const IDS = {
     ORAL_AND_MAXILLOFACIAL_SURGEON: 'db8e92e6-0332-46fc-8f68-1f0feb9b9c86',
     ORTHODONTIST: 'd720695e-3af0-490a-ad2b-ccb6443c6c07',
   },
+  DOCTORS: {
+    LAIZ: '1791f4d7-5f22-42b8-b102-4f357655f753',
+    MARIAN: '63c1da77-52be-48df-95d4-3129f4866321',
+    ERICK: '2beb00b9-614c-40ea-b2ab-09739153d94b',
+    NORMA: '7be85d80-950a-4a67-a9e4-8e4146980a4a',
+    JOSUE: '50e1a12e-ad46-4b06-a0c3-beef369f536e',
+  },
 };
 
 export default IDS;

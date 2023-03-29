@@ -8,7 +8,8 @@ const doctors = [
     isSystemUser: true,
     doctor: {
       create: {
-        prefix: 'Dra.',
+        id: IDS.DOCTORS.LAIZ,
+        prefix: 'BDS, DMD',
         specializations: {
           create: [
             {
@@ -29,7 +30,8 @@ const doctors = [
     isSystemUser: true,
     doctor: {
       create: {
-        prefix: 'Dr.',
+        id: IDS.DOCTORS.ERICK,
+        prefix: 'BDS, DDS',
         specializations: {
           create: [
             {
@@ -50,7 +52,8 @@ const doctors = [
     isSystemUser: true,
     doctor: {
       create: {
-        prefix: 'Dra.',
+        id: IDS.DOCTORS.NORMA,
+        prefix: 'BDS, DDS',
         specializations: {
           create: [
             {
@@ -71,7 +74,8 @@ const doctors = [
     isSystemUser: true,
     doctor: {
       create: {
-        prefix: 'Dr.',
+        id: IDS.DOCTORS.JOSUE,
+        prefix: 'BDS, DDS',
         specializations: {
           create: [
             {
@@ -92,7 +96,8 @@ const doctors = [
     isSystemUser: true,
     doctor: {
       create: {
-        prefix: 'Dra.',
+        id: IDS.DOCTORS.MARIAN,
+        prefix: 'BDS, DMD',
         specializations: {
           create: [
             {

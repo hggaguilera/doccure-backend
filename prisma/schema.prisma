@@ -131,22 +131,58 @@ model User {
 
 model Doctor {
   // Standardized Prefix Fields
-  id              String                   @id @default(uuid())
+  id                   String                   @id @default(uuid())
   // Model-Specific Fields
-  prefix          String
-  personId        String                   @unique @map("person_id")
+  prefix               String
+  personId             String                   @unique @map("person_id")
   // Standardized Suffix Fields
-  status          Status                   @default(active)
-  isDeleted       Boolean                  @default(false) @map("is_deleted")
-  createdAt       DateTime                 @default(now()) @map("created_at")
-  updatedAt       DateTime                 @updatedAt @map("updated_at")
+  status               Status                   @default(active)
+  isDeleted            Boolean                  @default(false) @map("is_deleted")
+  createdAt            DateTime                 @default(now()) @map("created_at")
+  updatedAt            DateTime                 @updatedAt @map("updated_at")
   // Parent Relationships
-  person          Person                   @relation(name: "Doctor.personId", fields: [personId], references: [id], onDelete: Cascade)
+  person               Person                   @relation(name: "Doctor.personId", fields: [personId], references: [id], onDelete: Cascade)
   // Child Relationships
-  appointments    Appointment[]            @relation(name: "Appointment.doctorId")
-  specializations DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
+  appointments         Appointment[]            @relation(name: "Appointment.doctorId")
+  specializations      DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
+  weeklyAvailabilities WeeklyAvailability[]     @relation(name: "WeeklyAvailability.doctorId")
+  timeSlots            TimeSlots[]              @relation(name: "TimeSlots.doctorId")
 
   @@map("doctors")
+}
+
+model WeeklyAvailability {
+  // Standardized Prefix Fields
+  id        String   @id @default(uuid())
+  // Model Specific Fields
+  doctorId  String   @map("doctor_id")
+  weekday   Int
+  // Standardized Suffix Fields
+  status    Status   @default(active)
+  isDeleted Boolean  @default(false) @map("is_deleted")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  // Parent Relationships
+  Doctor    Doctor   @relation(name: "WeeklyAvailability.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("weekly_availabilities")
+}
+
+model TimeSlots {
+  // Standardized Prefix Fields
+  id              String   @id @default(uuid())
+  // Model Specific Fields
+  doctorId        String   @map("doctor_id")
+  unabledTimeSlot DateTime @map("unabled_time_slot")
+  // Standardized Suffix Fields
+  status          Status   @default(active)
+  isDeleted       Boolean  @default(false) @map("is_deleted")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  // Parent Relationships
+  Doctor          Doctor   @relation(name: "TimeSlots.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@map("time_slots")
 }
 
 model Specialty {
@@ -185,16 +221,16 @@ model DoctorsWithSpecialties {
 
 model Service {
   // Standardized Prefix Fields
-  id                 String       @id @default(uuid())
+  id                 String        @id @default(uuid())
   // Model-Specific Fields
-  serviceName        String       @unique @map("service_name")
-  serviceDescription String       @map("service_description")
+  serviceName        String        @unique @map("service_name")
+  serviceDescription String        @map("service_description")
   price              Float
   // Standardized Suffix Fields
-  status             Status       @default(active)
-  isDeleted          Boolean      @default(false) @map("is_deleted")
-  createdAt          DateTime     @default(now()) @map("created_at")
-  updatedAt          DateTime     @updatedAt @map("updated_at")
+  status             Status        @default(active)
+  isDeleted          Boolean       @default(false) @map("is_deleted")
+  createdAt          DateTime      @default(now()) @map("created_at")
+  updatedAt          DateTime      @updatedAt @map("updated_at")
   // Child Relationships
   appointment        Appointment[] @relation(name: "Appointment.serviceId")
 
