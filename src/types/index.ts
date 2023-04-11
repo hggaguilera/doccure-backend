@@ -68,3 +68,11 @@ export type Appointment = {
   status: string;
   message?: string;
 };
+
+export type AppointmentUpdateInput = {
+  doctorId?: string;
+  serviceId?: string;
+  date?: string | Date;
+  status?: 'active' | 'inactive';
+  isDeleted?: boolean;
+};

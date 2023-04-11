@@ -4,9 +4,15 @@ import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { DoctorService } from 'src/doctor/doctor.service';
-import { AppointmentInput, Appointment } from '../types';
+import {
+  Appointment,
+  AppointmentInput,
+  AppointmentUpdateInput,
+} from '../types';
 
+// adding utc helpers to date handler package
 dayjs.extend(utc);
+
 @Injectable()
 export class AppointmentService {
   constructor(
@@ -51,7 +57,7 @@ export class AppointmentService {
       });
     }
 
-    const doctor = await this.doctorService.doctor({ id: data.doctor });
+    const doctor = await this.doctorService.getDoctor({ id: data.doctor });
     const doctorName = `${doctor.firstName} ${doctor.lastName}`;
     const patientName = `${person.firstName} ${person.lastName}`;
 
@@ -141,5 +147,42 @@ export class AppointmentService {
     });
 
     return data;
+  }
+
+  async getAppointment(
+    appointmentId: Prisma.AppointmentWhereUniqueInput,
+  ): Promise<Appointment> {
+    const appointment = await this.prisma.appointment.findUnique({
+      where: appointmentId,
+      include: {
+        doctor: { include: { person: true } },
+        person: true,
+        service: true,
+      },
+    });
+
+    const doctorName = `${appointment.doctor.person.firstName} ${appointment.doctor.person.lastName}`;
+    const patientName = `${appointment.person.firstName} ${appointment.person.lastName}`;
+
+    return {
+      id: appointment.id,
+      doctor: doctorName,
+      doctorEmail: appointment.doctor.person.email,
+      patient: patientName,
+      service: appointment.service.serviceName,
+      date: appointment.date,
+      status: appointment.status,
+    };
+  }
+
+  async updateAppointment(
+    appointmentId: Prisma.AppointmentWhereUniqueInput,
+    data: AppointmentUpdateInput,
+  ): Promise<Appointment> {
+    await this.prisma.appointment.update({ where: appointmentId, data: data });
+
+    const appointment = this.getAppointment(appointmentId);
+
+    return appointment;
   }
 }

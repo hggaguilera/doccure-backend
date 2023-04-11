@@ -7,7 +7,7 @@ import { DoctorCreateInput, DoctorWithSpecialties } from '../types';
 export class DoctorService {
   constructor(private prisma: PrismaService) {}
 
-  async doctor(
+  async getDoctor(
     doctorWhereUniqueInput: Prisma.DoctorWhereUniqueInput,
   ): Promise<DoctorWithSpecialties | null> {
     const doctor = await this.prisma.doctor.findUnique({
@@ -40,7 +40,7 @@ export class DoctorService {
     };
   }
 
-  async doctors(params: {
+  async getDoctors(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.DoctorWhereUniqueInput;
@@ -121,7 +121,7 @@ export class DoctorService {
       });
     }
 
-    return this.doctor({ id: doctor.id });
+    return this.getDoctor({ id: doctor.id });
   }
 
   // async updateDoctor(data: DoctorUpdateInput) {

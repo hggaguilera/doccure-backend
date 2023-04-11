@@ -2,21 +2,21 @@ import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { DoctorCreateInput, DoctorWithSpecialties } from 'src/types';
 
-@Controller()
+@Controller('doctors')
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
-  @Get('doctor/:id')
+  @Get(':id')
   async getDoctorById(@Param('id') id: string): Promise<DoctorWithSpecialties> {
-    return this.doctorService.doctor({ id: id });
+    return this.doctorService.getDoctor({ id: id });
   }
 
-  @Get('doctors')
+  @Get()
   async getDoctorsList(): Promise<DoctorWithSpecialties[]> {
-    return this.doctorService.doctors({ where: { status: 'active' } });
+    return this.doctorService.getDoctors({ where: { status: 'active' } });
   }
 
-  @Post('doctor')
+  @Post()
   async createDoctor(
     @Body() personData: DoctorCreateInput,
   ): Promise<DoctorWithSpecialties> {

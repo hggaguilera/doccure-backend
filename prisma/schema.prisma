@@ -146,7 +146,6 @@ model Doctor {
   appointments         Appointment[]            @relation(name: "Appointment.doctorId")
   specializations      DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
   weeklyAvailabilities WeeklyAvailability[]     @relation(name: "WeeklyAvailability.doctorId")
-  timeSlots            TimeSlots[]              @relation(name: "TimeSlots.doctorId")
 
   @@map("doctors")
 }
@@ -166,23 +165,6 @@ model WeeklyAvailability {
   Doctor    Doctor   @relation(name: "WeeklyAvailability.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
 
   @@map("weekly_availabilities")
-}
-
-model TimeSlots {
-  // Standardized Prefix Fields
-  id              String   @id @default(uuid())
-  // Model Specific Fields
-  doctorId        String   @map("doctor_id")
-  unabledTimeSlot DateTime @map("unabled_time_slot")
-  // Standardized Suffix Fields
-  status          Status   @default(active)
-  isDeleted       Boolean  @default(false) @map("is_deleted")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
-  // Parent Relationships
-  Doctor          Doctor   @relation(name: "TimeSlots.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
-
-  @@map("time_slots")
 }
 
 model Specialty {
