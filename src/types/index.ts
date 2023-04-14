@@ -76,3 +76,8 @@ export type AppointmentUpdateInput = {
   status?: 'active' | 'inactive';
   isDeleted?: boolean;
 };
+
+export type UserLogin = {
+  username: string;
+  password: string;
+};

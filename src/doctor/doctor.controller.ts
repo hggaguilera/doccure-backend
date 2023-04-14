@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { DoctorService } from './doctor.service';
 import { DoctorCreateInput, DoctorWithSpecialties } from 'src/types';
 
@@ -6,6 +7,7 @@ import { DoctorCreateInput, DoctorWithSpecialties } from 'src/types';
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async getDoctorById(@Param('id') id: string): Promise<DoctorWithSpecialties> {
     return this.doctorService.getDoctor({ id: id });
