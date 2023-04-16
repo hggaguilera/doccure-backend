@@ -11,7 +11,7 @@ export class AuthService {
   async generateToken(login: UserLogin): Promise<string> {
     const doctor = await this.prisma.person.findUnique({
       where: { email: login.username },
-      select: { id: true },
+      select: { id: true, firstName: true, lastName: true },
     });
 
     const user = await this.prisma.user.findUnique({
@@ -19,7 +19,11 @@ export class AuthService {
     });
 
     if (this.checkPassword(login.password, user.password)) {
-      const payload = { username: login.username, sub: user.id };
+      const payload = {
+        username: login.username,
+        name: `${doctor.firstName} ${doctor.lastName}`,
+        sub: user.id,
+      };
       return this.jwtService.signAsync(payload);
     }
   }

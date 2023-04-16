@@ -3,6 +3,7 @@ import countries from './data/countries';
 import specialties from './data/specialties';
 import doctors from './data/doctors';
 import services from './data/services';
+import timeSlots from './data/time-slots';
 import * as bcrypt from 'bcrypt';
 
 async function hashPassword(password: string) {
@@ -18,12 +19,14 @@ async function main() {
     await prisma.doctorsWithSpecialties.deleteMany();
   const deletedUsers = await prisma.person.deleteMany();
   const deletedServices = await prisma.service.deleteMany();
+  const deletedTimeSlots = await prisma.weeklyAvailability.deleteMany();
 
   const deletedRecords =
     deletedCountries.count +
     deletedDoctorWithSpecialties.count +
     deletedUsers.count +
-    deletedServices.count;
+    deletedServices.count +
+    deletedTimeSlots.count;
 
   console.log('\n', `\u{1F3AF} ${deletedRecords} records were deleted`);
 
@@ -53,8 +56,16 @@ async function main() {
     });
   }
 
+  const createdTimeSlots = await prisma.weeklyAvailability.createMany({
+    data: timeSlots,
+    skipDuplicates: true,
+  });
+
   const records =
-    createdCountries.count + createdSpecialties.count + createdServices.count;
+    createdCountries.count +
+    createdSpecialties.count +
+    createdServices.count +
+    createdTimeSlots.count;
   console.log('\n', `\u{1F3AF} ${records} new records were created`);
 }
 

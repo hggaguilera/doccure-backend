@@ -78,3 +78,5 @@ const timeSlots = [
     weekday: 5,
   },
 ];
+
+export default timeSlots;
