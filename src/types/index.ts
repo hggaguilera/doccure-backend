@@ -31,6 +31,7 @@ export type DoctorWithSpecialties = {
   isSystemUser: boolean;
   status: string;
   specializations: string[];
+  createdAt: string | Date;
 };
 
 export type Specialties = {

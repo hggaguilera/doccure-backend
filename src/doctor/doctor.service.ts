@@ -36,6 +36,7 @@ export class DoctorService {
       email: doctor?.person?.email,
       isSystemUser: doctor?.person?.isSystemUser,
       status: doctor?.status,
+      createdAt: doctor?.createdAt,
       specializations: specialties,
     };
   }
@@ -79,6 +80,7 @@ export class DoctorService {
         email: doctor?.person?.email,
         isSystemUser: doctor?.person?.isSystemUser,
         status: doctor?.status,
+        createdAt: doctor.createdAt,
         specializations: specialties,
       };
     });

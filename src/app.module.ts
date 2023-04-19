@@ -24,7 +24,11 @@ import { AuthModule } from './auth/auth.module';
       },
     }),
     ConfigModule.forRoot({ isGlobal: true }),
-    JwtModule.register({ global: true, secret: process.env.JWT_SECRET }),
+    JwtModule.register({
+      global: true,
+      signOptions: { expiresIn: '8h' },
+      secret: process.env.JWT_SECRET,
+    }),
     DoctorModule,
     AppointmentModule,
     SpecialtyModule,

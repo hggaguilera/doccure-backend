@@ -18,6 +18,7 @@ export class DoctorController {
     return this.doctorService.getDoctors({ where: { status: 'active' } });
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   async createDoctor(
     @Body() personData: DoctorCreateInput,
