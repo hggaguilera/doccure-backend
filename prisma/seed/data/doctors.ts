@@ -2,117 +2,29 @@ import IDS from './_constants';
 
 const doctors = [
   {
-    firstName: 'Laiz',
-    lastName: 'Medina',
-    email: 'laiz.medina@msdental.com',
-    isSystemUser: true,
-    doctor: {
-      create: {
-        id: IDS.DOCTORS.LAIZ,
-        prefix: 'BDS, DMD',
-        specializations: {
-          create: [
-            {
-              specialtyId: IDS.SPECIALTY.GENERAL_DENTISTRY,
-            },
-            {
-              specialtyId: IDS.SPECIALTY.ORTHODONTIST,
-            },
-          ],
-        },
-      },
-    },
+    id: IDS.DOCTORS.LAIZ,
+    personId: IDS.USERS.LAIZ,
+    prefix: 'BDS, DMD',
   },
   {
-    firstName: 'Erick',
-    lastName: 'Collado',
-    email: 'erick.collado@msdental.com',
-    isSystemUser: true,
-    doctor: {
-      create: {
-        id: IDS.DOCTORS.ERICK,
-        prefix: 'BDS, DDS',
-        specializations: {
-          create: [
-            {
-              specialtyId: IDS.SPECIALTY.GENERAL_DENTISTRY,
-            },
-            {
-              specialtyId: IDS.SPECIALTY.ENDODONTIST,
-            },
-          ],
-        },
-      },
-    },
+    id: IDS.DOCTORS.ERICK,
+    personId: IDS.USERS.ERICK,
+    prefix: 'BDS, DDS',
   },
   {
-    firstName: 'Norma',
-    lastName: 'Fuentes',
-    email: 'norma.fuentes@msdental.com',
-    isSystemUser: true,
-    doctor: {
-      create: {
-        id: IDS.DOCTORS.NORMA,
-        prefix: 'BDS, DDS',
-        specializations: {
-          create: [
-            {
-              specialtyId: IDS.SPECIALTY.GENERAL_DENTISTRY,
-            },
-            {
-              specialtyId: IDS.SPECIALTY.COSMETIC_DENTISTRY,
-            },
-          ],
-        },
-      },
-    },
+    id: IDS.DOCTORS.NORMA,
+    personId: IDS.USERS.NORMA,
+    prefix: 'BDS, DDS',
   },
   {
-    firstName: 'Josue',
-    lastName: 'Munguia',
-    email: 'josue.munguia@msdental.com',
-    isSystemUser: true,
-    doctor: {
-      create: {
-        id: IDS.DOCTORS.JOSUE,
-        prefix: 'BDS, DDS',
-        specializations: {
-          create: [
-            {
-              specialtyId: IDS.SPECIALTY.GENERAL_DENTISTRY,
-            },
-            {
-              specialtyId: IDS.SPECIALTY.PERIODONTIST,
-            },
-          ],
-        },
-      },
-    },
+    id: IDS.DOCTORS.JOSUE,
+    personId: IDS.USERS.JOSUE,
+    prefix: 'BDS, DDS',
   },
   {
-    firstName: 'Marian',
-    lastName: 'Somarriba',
-    email: 'marian.somarriba@msdental.com',
-    isSystemUser: true,
-    doctor: {
-      create: {
-        id: IDS.DOCTORS.MARIAN,
-        prefix: 'BDS, DMD',
-        specializations: {
-          create: [
-            {
-              specialtyId: IDS.SPECIALTY.GENERAL_DENTISTRY,
-            },
-            {
-              specialtyId: IDS.SPECIALTY.ORAL_MEDICINE,
-            },
-            {
-              specialtyId: IDS.SPECIALTY.COSMETIC_DENTISTRY,
-            },
-          ],
-        },
-      },
-    },
+    id: IDS.DOCTORS.MARIAN,
+    personId: IDS.USERS.MARIAN,
+    prefix: 'BDS, DMD',
   },
 ];
 

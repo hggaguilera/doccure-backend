@@ -49,12 +49,6 @@ const specialties = [
     specialtyDescription:
       'Se ocupa de realizar cirugías en la boca y en la mandíbula, incluyendo la extracción de dientes y la cirugía para corregir problemas con la mandíbula.',
   },
-  {
-    id: IDS.SPECIALTY.ORTHODONTIST,
-    specialtyName: 'Ortodoncia',
-    specialtyDescription:
-      'Se ocupa del estudio, la prevención, el diagnóstico y la corrección de las anomalías presentes en los dientes y la mandíbula que afectan a la morfología y al funcionamiento del aparato masticatorio.',
-  },
 ];
 
 export default specialties;

@@ -118,7 +118,7 @@ model User {
   id        String   @id @default(uuid())
   // Model-Specific Fields
   personId  String   @unique @map("person_id")
-  password  String
+  password  String?
   // Standardized Suffix Fields
   status    Status   @default(active)
   isDeleted Boolean  @default(false) @map("is_deleted")
@@ -146,26 +146,8 @@ model Doctor {
   // Child Relationships
   appointments         Appointment[]            @relation(name: "Appointment.doctorId")
   specializations      DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
-  weeklyAvailabilities WeeklyAvailability[]     @relation(name: "WeeklyAvailability.doctorId")
 
   @@map("doctors")
-}
-
-model WeeklyAvailability {
-  // Standardized Prefix Fields
-  id        String   @id @default(uuid())
-  // Model Specific Fields
-  doctorId  String   @map("doctor_id")
-  weekday   Int
-  // Standardized Suffix Fields
-  status    Status   @default(active)
-  isDeleted Boolean  @default(false) @map("is_deleted")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  // Parent Relationships
-  Doctor    Doctor   @relation(name: "WeeklyAvailability.doctorId", fields: [doctorId], references: [id], onDelete: Cascade)
-
-  @@map("weekly_availabilities")
 }
 
 model Specialty {
@@ -181,8 +163,28 @@ model Specialty {
   updatedAt            DateTime                 @updatedAt @map("updated_at")
   // Child Relationships
   doctors              DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.specialtyId")
+  services             SpecialtyServices[]      @relation(name: "SpecialtyServices.specialtyId")
 
   @@map("specialties")
+}
+
+model Service {
+  // Standardized Prefix Fields
+  id                 String              @id @default(uuid())
+  // Model-Specific Fields
+  serviceName        String              @unique @map("service_name")
+  serviceDescription String              @map("service_description")
+  price              Float
+  // Standardized Suffix Fields
+  status             Status              @default(active)
+  isDeleted          Boolean             @default(false) @map("is_deleted")
+  createdAt          DateTime            @default(now()) @map("created_at")
+  updatedAt          DateTime            @updatedAt @map("updated_at")
+  // Child Relationships
+  appointment        Appointment[]       @relation(name: "Appointment.serviceId")
+  specialties        SpecialtyServices[] @relation(name: "SpecialtyServices.serviceId")
+
+  @@map("services")
 }
 
 model DoctorsWithSpecialties {
@@ -202,22 +204,22 @@ model DoctorsWithSpecialties {
   @@map("doctor_with_specialties")
 }
 
-model Service {
-  // Standardized Prefix Fields
-  id                 String        @id @default(uuid())
-  // Model-Specific Fields
-  serviceName        String        @unique @map("service_name")
-  serviceDescription String        @map("service_description")
-  price              Float
+model SpecialtyServices {
+  // Model Specific Fields
+  serviceId   String
+  specialtyId String
   // Standardized Suffix Fields
-  status             Status        @default(active)
-  isDeleted          Boolean       @default(false) @map("is_deleted")
-  createdAt          DateTime      @default(now()) @map("created_at")
-  updatedAt          DateTime      @updatedAt @map("updated_at")
-  // Child Relationships
-  appointment        Appointment[] @relation(name: "Appointment.serviceId")
+  status      Status    @default(active)
+  isDeleted   Boolean   @default(false) @map("is_deleted")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  // Parent Relationships
+  service     Service   @relation(name: "SpecialtyServices.serviceId", fields: [serviceId], references: [id], onDelete: Cascade)
+  specialty   Specialty @relation(name: "SpecialtyServices.specialtyId", fields: [specialtyId], references: [id], onDelete: Cascade)
 
-  @@map("services")
+  // Unique Constraint
+  @@unique([specialtyId, serviceId])
+  @@map("specialty_services")
 }
 
 model Appointment {

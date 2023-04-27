@@ -34,6 +34,18 @@ export type DoctorWithSpecialties = {
   createdAt: string | Date;
 };
 
+export type ServicesWithSpecialties = {
+  id: string;
+  specialtyName: string;
+  specialtyDescription: string;
+  doctors: string[];
+  services: {
+    id: string;
+    name: string;
+  }[];
+  status: 'active' | 'inactive';
+};
+
 export type Specialties = {
   id: string;
   specialtyName: string;
