@@ -28,7 +28,7 @@ export class AppointmentService {
       where: { id: data.service },
     });
 
-    person = await this.prisma.person.findFirst({
+    person = await this.prisma.person.findUnique({
       where: { email: data.email },
     });
 

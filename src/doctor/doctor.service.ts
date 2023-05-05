@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 import { DoctorCreateInput, DoctorWithSpecialties } from '../types';
 
 @Injectable()
@@ -22,23 +23,26 @@ export class DoctorService {
       },
     });
 
-    const specialties = doctor.specializations.map(
-      (specialty) => specialty?.specialty?.specialtyName,
-    );
+    if (doctor) {
+      const specialties = doctor.specializations.map(
+        (specialty) => specialty?.specialty?.specialtyName,
+      );
 
-    return {
-      id: doctor?.id,
-      personId: doctor?.personId,
-      prefix: doctor?.prefix,
-      firstName: doctor?.person?.firstName,
-      middleName: doctor?.person?.middleName,
-      lastName: doctor?.person?.lastName,
-      email: doctor?.person?.email,
-      isSystemUser: doctor?.person?.isSystemUser,
-      status: doctor?.status,
-      createdAt: doctor?.createdAt,
-      specializations: specialties,
-    };
+      return {
+        id: doctor?.id,
+        personId: doctor?.personId,
+        prefix: doctor?.prefix,
+        firstName: doctor?.person?.firstName,
+        middleName: doctor?.person?.middleName,
+        lastName: doctor?.person?.lastName,
+        email: doctor?.person?.email,
+        isSystemUser: doctor?.person?.isSystemUser,
+        status: doctor?.status,
+        createdAt: doctor?.createdAt,
+        specializations: specialties,
+      };
+    }
+    return null;
   }
 
   async getDoctors(params: {
@@ -100,8 +104,11 @@ export class DoctorService {
     });
 
     if (person.isSystemUser === true) {
+      const temporaryPassword = Math.random().toString(36).slice(-8);
+      const passwordHashed = await bcrypt.hash(temporaryPassword, 10);
+
       await this.prisma.user.create({
-        data: { personId: person.id, password: 'sos' },
+        data: { personId: person.id, password: passwordHashed },
       });
     }
 

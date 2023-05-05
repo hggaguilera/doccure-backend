@@ -32,7 +32,7 @@ model Address {
   id                 String   @id @default(uuid())
   // Model-Specific Fields
   countryId          String   @map("country_id")
-  personId           String   @map("person_id")
+  personId           String   @unique @map("person_id")
   addressLineOne     String   @map("address_line_one")
   addressLineTwo     String?  @map("address_line_two")
   stateOrCity        String   @map("state_or_city")
@@ -83,10 +83,10 @@ model Person {
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
   // Child Relationships
-  addresses    Address[]     @relation(name: "Address.personId")
-  phoneNumbers PhoneNumber[] @relation(name: "PhoneNumber.personId")
   invoices     Invoice[]     @relation(name: "Invoice.clientId")
   appointments Appointment[] @relation(name: "Appointment.personId")
+  addresses    Address?      @relation(name: "Address.personId")
+  phoneNumbers PhoneNumber?  @relation(name: "PhoneNumber.personId")
   user         User?         @relation(name: "User.personId")
   doctor       Doctor?       @relation(name: "Doctor.personId")
 
@@ -99,7 +99,7 @@ model PhoneNumber {
   // Model-Specific Fields
   isPrimary   PrimaryPhone    @default(yes) @map("is_primary")
   type        PhoneNumberType @default(mobile)
-  personId    String          @map("person_id")
+  personId    String          @unique @map("person_id")
   countryCode String          @map("country_code")
   phoneNumber String          @unique @map("phone_number")
   // Standardized Suffix Fields
@@ -132,20 +132,20 @@ model User {
 
 model Doctor {
   // Standardized Prefix Fields
-  id                   String                   @id @default(uuid())
+  id              String                   @id @default(uuid())
   // Model-Specific Fields
-  prefix               String
-  personId             String                   @unique @map("person_id")
+  prefix          String
+  personId        String                   @unique @map("person_id")
   // Standardized Suffix Fields
-  status               Status                   @default(active)
-  isDeleted            Boolean                  @default(false) @map("is_deleted")
-  createdAt            DateTime                 @default(now()) @map("created_at")
-  updatedAt            DateTime                 @updatedAt @map("updated_at")
+  status          Status                   @default(active)
+  isDeleted       Boolean                  @default(false) @map("is_deleted")
+  createdAt       DateTime                 @default(now()) @map("created_at")
+  updatedAt       DateTime                 @updatedAt @map("updated_at")
   // Parent Relationships
-  person               Person                   @relation(name: "Doctor.personId", fields: [personId], references: [id], onDelete: Cascade)
+  person          Person                   @relation(name: "Doctor.personId", fields: [personId], references: [id], onDelete: Cascade)
   // Child Relationships
-  appointments         Appointment[]            @relation(name: "Appointment.doctorId")
-  specializations      DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
+  appointments    Appointment[]            @relation(name: "Appointment.doctorId")
+  specializations DoctorsWithSpecialties[] @relation(name: "DoctorsWithSpecialties.doctorId")
 
   @@map("doctors")
 }
