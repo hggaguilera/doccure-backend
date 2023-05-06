@@ -1,6 +1,6 @@
 const countries = [
   {
-    name: 'Afghanistan',
+    name: 'Afganistán',
     abbreviationTwo: 'AF',
     abbreviationThree: 'AFG',
   },
@@ -8,6 +8,11 @@ const countries = [
     name: 'Albania',
     abbreviationTwo: 'AL',
     abbreviationThree: 'ALB',
+  },
+  {
+    name: 'Alemania',
+    abbreviationTwo: 'DE',
+    abbreviationThree: 'DEU',
   },
   {
     name: 'Algeria',
@@ -25,9 +30,29 @@ const countries = [
     abbreviationThree: 'AGO',
   },
   {
-    name: 'Antigua and Barbuda',
+    name: 'Anguila',
+    abbreviationTwo: 'AI',
+    abbreviationThree: 'AIA',
+  },
+  {
+    name: 'Antártida',
+    abbreviationTwo: 'AQ',
+    abbreviationThree: 'ATA',
+  },
+  {
+    name: 'Antigua y Barbuda',
     abbreviationTwo: 'AG',
     abbreviationThree: 'ATG',
+  },
+  {
+    name: 'Antillas Neerlandesas',
+    abbreviationTwo: 'AN',
+    abbreviationThree: 'ANT',
+  },
+  {
+    name: 'Arabia Saudita',
+    abbreviationTwo: 'SA',
+    abbreviationThree: 'SAU',
   },
   {
     name: 'Argentina',
@@ -40,6 +65,11 @@ const countries = [
     abbreviationThree: 'ARM',
   },
   {
+    name: 'Aruba',
+    abbreviationTwo: 'AW',
+    abbreviationThree: 'ABW',
+  },
+  {
     name: 'Australia',
     abbreviationTwo: 'AU',
     abbreviationThree: 'AUS',
@@ -50,9 +80,14 @@ const countries = [
     abbreviationThree: 'AUT',
   },
   {
-    name: 'Azerbaijan',
+    name: 'Azerbayán',
     abbreviationTwo: 'AZ',
     abbreviationThree: 'AZE',
+  },
+  {
+    name: 'Bélgica',
+    abbreviationTwo: 'BE',
+    abbreviationThree: 'BEL',
   },
   {
     name: 'Bahamas',
@@ -60,7 +95,7 @@ const countries = [
     abbreviationThree: 'BHS',
   },
   {
-    name: 'Bahrain',
+    name: 'Bahrein',
     abbreviationTwo: 'BH',
     abbreviationThree: 'BHR',
   },
@@ -75,29 +110,29 @@ const countries = [
     abbreviationThree: 'BRB',
   },
   {
-    name: 'Belarus',
-    abbreviationTwo: 'BY',
-    abbreviationThree: 'BLR',
-  },
-  {
-    name: 'Belgium',
-    abbreviationTwo: 'BE',
-    abbreviationThree: 'BEL',
-  },
-  {
-    name: 'Belize',
+    name: 'Belice',
     abbreviationTwo: 'BZ',
     abbreviationThree: 'BLZ',
   },
   {
-    name: 'Benin',
+    name: 'Benín',
     abbreviationTwo: 'BJ',
     abbreviationThree: 'BEN',
   },
   {
-    name: 'Bhutan',
+    name: 'Bhután',
     abbreviationTwo: 'BT',
     abbreviationThree: 'BTN',
+  },
+  {
+    name: 'Bielorrusia',
+    abbreviationTwo: 'BY',
+    abbreviationThree: 'BLR',
+  },
+  {
+    name: 'Birmania',
+    abbreviationTwo: 'MM',
+    abbreviationThree: 'MMR',
   },
   {
     name: 'Bolivia',
@@ -105,22 +140,22 @@ const countries = [
     abbreviationThree: 'BOL',
   },
   {
-    name: 'Bosnia and Herzegovina',
+    name: 'Bosnia y Herzegovina',
     abbreviationTwo: 'BA',
     abbreviationThree: 'BIH',
   },
   {
-    name: 'Botswana',
+    name: 'Botsuana',
     abbreviationTwo: 'BW',
     abbreviationThree: 'BWA',
   },
   {
-    name: 'Brazil',
+    name: 'Brasil',
     abbreviationTwo: 'BR',
     abbreviationThree: 'BRA',
   },
   {
-    name: 'Brunei',
+    name: 'Brunéi',
     abbreviationTwo: 'BN',
     abbreviationThree: 'BRN',
   },
@@ -140,29 +175,24 @@ const countries = [
     abbreviationThree: 'BDI',
   },
   {
-    name: 'Cambodia',
-    abbreviationTwo: 'KH',
-    abbreviationThree: 'KHM',
-  },
-  {
-    name: 'Cameroon',
-    abbreviationTwo: 'CM',
-    abbreviationThree: 'CMR',
-  },
-  {
-    name: 'Canada',
-    abbreviationTwo: 'CA',
-    abbreviationThree: 'CAN',
-  },
-  {
-    name: 'Cape Verde',
+    name: 'Cabo Verde',
     abbreviationTwo: 'CV',
     abbreviationThree: 'CPV',
   },
   {
-    name: 'Central African Republic',
-    abbreviationTwo: 'CF',
-    abbreviationThree: 'CAF',
+    name: 'Camboya',
+    abbreviationTwo: 'KH',
+    abbreviationThree: 'KHM',
+  },
+  {
+    name: 'Camerún',
+    abbreviationTwo: 'CM',
+    abbreviationThree: 'CMR',
+  },
+  {
+    name: 'Canadá',
+    abbreviationTwo: 'CA',
+    abbreviationThree: 'CAN',
   },
   {
     name: 'Chad',
@@ -180,14 +210,49 @@ const countries = [
     abbreviationThree: 'CHN',
   },
   {
+    name: 'Chipre',
+    abbreviationTwo: 'CY',
+    abbreviationThree: 'CYP',
+  },
+  {
+    name: 'Ciudad del Vaticano',
+    abbreviationTwo: 'VA',
+    abbreviationThree: 'VAT',
+  },
+  {
     name: 'Colombia',
     abbreviationTwo: 'CO',
     abbreviationThree: 'COL',
   },
   {
-    name: 'Comoros',
+    name: 'Comoras',
     abbreviationTwo: 'KM',
     abbreviationThree: 'COM',
+  },
+  {
+    name: 'Congo',
+    abbreviationTwo: 'CG',
+    abbreviationThree: 'COG',
+  },
+  {
+    name: 'Congo',
+    abbreviationTwo: 'CD',
+    abbreviationThree: 'COD',
+  },
+  {
+    name: 'Corea del Norte',
+    abbreviationTwo: 'KP',
+    abbreviationThree: 'PRK',
+  },
+  {
+    name: 'Corea del Sur',
+    abbreviationTwo: 'KR',
+    abbreviationThree: 'KOR',
+  },
+  {
+    name: 'Costa de Marfil',
+    abbreviationTwo: 'CI',
+    abbreviationThree: 'CIV',
   },
   {
     name: 'Costa Rica',
@@ -195,7 +260,7 @@ const countries = [
     abbreviationThree: 'CRI',
   },
   {
-    name: 'Croatia',
+    name: 'Croacia',
     abbreviationTwo: 'HR',
     abbreviationThree: 'HRV',
   },
@@ -205,24 +270,9 @@ const countries = [
     abbreviationThree: 'CUB',
   },
   {
-    name: 'Cyprus',
-    abbreviationTwo: 'CY',
-    abbreviationThree: 'CYP',
-  },
-  {
-    name: 'Czech Republic',
-    abbreviationTwo: 'CZ',
-    abbreviationThree: 'CZE',
-  },
-  {
-    name: 'Denmark',
+    name: 'Dinamarca',
     abbreviationTwo: 'DK',
     abbreviationThree: 'DNK',
-  },
-  {
-    name: 'Djibouti',
-    abbreviationTwo: 'DJ',
-    abbreviationThree: 'DJI',
   },
   {
     name: 'Dominica',
@@ -230,22 +280,12 @@ const countries = [
     abbreviationThree: 'DMA',
   },
   {
-    name: 'Dominican Republic',
-    abbreviationTwo: 'DO',
-    abbreviationThree: 'DOM',
-  },
-  {
-    name: 'DR Congo',
-    abbreviationTwo: 'CD',
-    abbreviationThree: 'COD',
-  },
-  {
     name: 'Ecuador',
     abbreviationTwo: 'EC',
     abbreviationThree: 'ECU',
   },
   {
-    name: 'Egypt',
+    name: 'Egipto',
     abbreviationTwo: 'EG',
     abbreviationThree: 'EGY',
   },
@@ -255,9 +295,9 @@ const countries = [
     abbreviationThree: 'SLV',
   },
   {
-    name: 'Equatorial Guinea',
-    abbreviationTwo: 'GQ',
-    abbreviationThree: 'GNQ',
+    name: 'Emiratos Árabes Unidos',
+    abbreviationTwo: 'AE',
+    abbreviationThree: 'ARE',
   },
   {
     name: 'Eritrea',
@@ -265,42 +305,57 @@ const countries = [
     abbreviationThree: 'ERI',
   },
   {
+    name: 'Eslovaquia',
+    abbreviationTwo: 'SK',
+    abbreviationThree: 'SVK',
+  },
+  {
+    name: 'Eslovenia',
+    abbreviationTwo: 'SI',
+    abbreviationThree: 'SVN',
+  },
+  {
+    name: 'España',
+    abbreviationTwo: 'ES',
+    abbreviationThree: 'ESP',
+  },
+  {
+    name: 'Estados Unidos de América',
+    abbreviationTwo: 'US',
+    abbreviationThree: 'USA',
+  },
+  {
     name: 'Estonia',
     abbreviationTwo: 'EE',
     abbreviationThree: 'EST',
   },
   {
-    name: 'Eswatini',
-    abbreviationTwo: 'SZ',
-    abbreviationThree: 'SWZ',
-  },
-  {
-    name: 'Ethiopia',
+    name: 'Etiopía',
     abbreviationTwo: 'ET',
     abbreviationThree: 'ETH',
   },
   {
-    name: 'Fiji',
-    abbreviationTwo: 'FJ',
-    abbreviationThree: 'FJI',
+    name: 'Filipinas',
+    abbreviationTwo: 'PH',
+    abbreviationThree: 'PHL',
   },
   {
-    name: 'Finland',
+    name: 'Finlandia',
     abbreviationTwo: 'FI',
     abbreviationThree: 'FIN',
   },
   {
-    name: 'France',
+    name: 'Fiyi',
+    abbreviationTwo: 'FJ',
+    abbreviationThree: 'FJI',
+  },
+  {
+    name: 'Francia',
     abbreviationTwo: 'FR',
     abbreviationThree: 'FRA',
   },
   {
-    name: 'French Guiana',
-    abbreviationTwo: 'GF',
-    abbreviationThree: 'GUF',
-  },
-  {
-    name: 'Gabon',
+    name: 'Gabón',
     abbreviationTwo: 'GA',
     abbreviationThree: 'GAB',
   },
@@ -315,34 +370,39 @@ const countries = [
     abbreviationThree: 'GEO',
   },
   {
-    name: 'Germany',
-    abbreviationTwo: 'DE',
-    abbreviationThree: 'DEU',
-  },
-  {
     name: 'Ghana',
     abbreviationTwo: 'GH',
     abbreviationThree: 'GHA',
   },
   {
-    name: 'Greece',
-    abbreviationTwo: 'GR',
-    abbreviationThree: 'GRC',
+    name: 'Gibraltar',
+    abbreviationTwo: 'GI',
+    abbreviationThree: 'GIB',
   },
   {
-    name: 'Greenland',
-    abbreviationTwo: 'GL',
-    abbreviationThree: 'GRL',
-  },
-  {
-    name: 'Grenada',
+    name: 'Granada',
     abbreviationTwo: 'GD',
     abbreviationThree: 'GRD',
   },
   {
-    name: 'Guadeloupe',
+    name: 'Grecia',
+    abbreviationTwo: 'GR',
+    abbreviationThree: 'GRC',
+  },
+  {
+    name: 'Groenlandia',
+    abbreviationTwo: 'GL',
+    abbreviationThree: 'GRL',
+  },
+  {
+    name: 'Guadalupe',
     abbreviationTwo: 'GP',
     abbreviationThree: 'GLP',
+  },
+  {
+    name: 'Guam',
+    abbreviationTwo: 'GU',
+    abbreviationThree: 'GUM',
   },
   {
     name: 'Guatemala',
@@ -350,9 +410,24 @@ const countries = [
     abbreviationThree: 'GTM',
   },
   {
+    name: 'Guayana Francesa',
+    abbreviationTwo: 'GF',
+    abbreviationThree: 'GUF',
+  },
+  {
+    name: 'Guernsey',
+    abbreviationTwo: 'GG',
+    abbreviationThree: 'GGY',
+  },
+  {
     name: 'Guinea',
     abbreviationTwo: 'GN',
     abbreviationThree: 'GIN',
+  },
+  {
+    name: 'Guinea Ecuatorial',
+    abbreviationTwo: 'GQ',
+    abbreviationThree: 'GNQ',
   },
   {
     name: 'Guinea-Bissau',
@@ -365,7 +440,7 @@ const countries = [
     abbreviationThree: 'GUY',
   },
   {
-    name: 'Haiti',
+    name: 'Haití',
     abbreviationTwo: 'HT',
     abbreviationThree: 'HTI',
   },
@@ -375,19 +450,14 @@ const countries = [
     abbreviationThree: 'HND',
   },
   {
-    name: 'Hong Kong',
+    name: 'Hong kong',
     abbreviationTwo: 'HK',
     abbreviationThree: 'HKG',
   },
   {
-    name: 'Hungary',
+    name: 'Hungría',
     abbreviationTwo: 'HU',
     abbreviationThree: 'HUN',
-  },
-  {
-    name: 'Iceland',
-    abbreviationTwo: 'IS',
-    abbreviationThree: 'ISL',
   },
   {
     name: 'India',
@@ -400,19 +470,134 @@ const countries = [
     abbreviationThree: 'IDN',
   },
   {
-    name: 'Iran',
+    name: 'Irán',
     abbreviationTwo: 'IR',
     abbreviationThree: 'IRN',
   },
   {
-    name: 'Iraq',
+    name: 'Irak',
     abbreviationTwo: 'IQ',
     abbreviationThree: 'IRQ',
   },
   {
-    name: 'Ireland',
+    name: 'Irlanda',
     abbreviationTwo: 'IE',
     abbreviationThree: 'IRL',
+  },
+  {
+    name: 'Isla Bouvet',
+    abbreviationTwo: 'BV',
+    abbreviationThree: 'BVT',
+  },
+  {
+    name: 'Isla de Man',
+    abbreviationTwo: 'IM',
+    abbreviationThree: 'IMN',
+  },
+  {
+    name: 'Isla de Navidad',
+    abbreviationTwo: 'CX',
+    abbreviationThree: 'CXR',
+  },
+  {
+    name: 'Isla Norfolk',
+    abbreviationTwo: 'NF',
+    abbreviationThree: 'NFK',
+  },
+  {
+    name: 'Islandia',
+    abbreviationTwo: 'IS',
+    abbreviationThree: 'ISL',
+  },
+  {
+    name: 'Islas Bermudas',
+    abbreviationTwo: 'BM',
+    abbreviationThree: 'BMU',
+  },
+  {
+    name: 'Islas Caimán',
+    abbreviationTwo: 'KY',
+    abbreviationThree: 'CYM',
+  },
+  {
+    name: 'Islas Cocos (Keeling)',
+    abbreviationTwo: 'CC',
+    abbreviationThree: 'CCK',
+  },
+  {
+    name: 'Islas Cook',
+    abbreviationTwo: 'CK',
+    abbreviationThree: 'COK',
+  },
+  {
+    name: 'Islas de Åland',
+    abbreviationTwo: 'AX',
+    abbreviationThree: 'ALA',
+  },
+  {
+    name: 'Islas Feroe',
+    abbreviationTwo: 'FO',
+    abbreviationThree: 'FRO',
+  },
+  {
+    name: 'Islas Georgias del Sur y Sandwich del Sur',
+    abbreviationTwo: 'GS',
+    abbreviationThree: 'SGS',
+  },
+  {
+    name: 'Islas Heard y McDonald',
+    abbreviationTwo: 'HM',
+    abbreviationThree: 'HMD',
+  },
+  {
+    name: 'Islas Maldivas',
+    abbreviationTwo: 'MV',
+    abbreviationThree: 'MDV',
+  },
+  {
+    name: 'Islas Malvinas',
+    abbreviationTwo: 'FK',
+    abbreviationThree: 'FLK',
+  },
+  {
+    name: 'Islas Marianas del Norte',
+    abbreviationTwo: 'MP',
+    abbreviationThree: 'MNP',
+  },
+  {
+    name: 'Islas Marshall',
+    abbreviationTwo: 'MH',
+    abbreviationThree: 'MHL',
+  },
+  {
+    name: 'Islas Pitcairn',
+    abbreviationTwo: 'PN',
+    abbreviationThree: 'PCN',
+  },
+  {
+    name: 'Islas Salomón',
+    abbreviationTwo: 'SB',
+    abbreviationThree: 'SLB',
+  },
+  {
+    name: 'Islas Turcas y Caicos',
+    abbreviationTwo: 'TC',
+    abbreviationThree: 'TCA',
+  },
+  {
+    name: 'Islas Ultramarinas Menores de Estados Unidos',
+    abbreviationTwo: 'UM',
+    abbreviationThree: 'UMI',
+  },
+  {
+    name: 'Islas Vírgenes Británicas',
+    abbreviationTwo: 'VG',
+    abbreviationThree: 'VG',
+  },
+  {
+    name: 'Islas Vírgenes de los Estados Unidos',
+    abbreviationTwo: 'VI',
+    abbreviationThree: 'VIR',
   },
   {
     name: 'Israel',
@@ -420,14 +605,9 @@ const countries = [
     abbreviationThree: 'ISR',
   },
   {
-    name: 'Italy',
+    name: 'Italia',
     abbreviationTwo: 'IT',
     abbreviationThree: 'ITA',
-  },
-  {
-    name: 'Ivory Coast',
-    abbreviationTwo: 'CI',
-    abbreviationThree: 'CIV',
   },
   {
     name: 'Jamaica',
@@ -435,24 +615,34 @@ const countries = [
     abbreviationThree: 'JAM',
   },
   {
-    name: 'Japan',
+    name: 'Japón',
     abbreviationTwo: 'JP',
     abbreviationThree: 'JPN',
   },
   {
-    name: 'Jordan',
+    name: 'Jersey',
+    abbreviationTwo: 'JE',
+    abbreviationThree: 'JEY',
+  },
+  {
+    name: 'Jordania',
     abbreviationTwo: 'JO',
     abbreviationThree: 'JOR',
   },
   {
-    name: 'Kazakhstan',
+    name: 'Kazajistán',
     abbreviationTwo: 'KZ',
     abbreviationThree: 'KAZ',
   },
   {
-    name: 'Kenya',
+    name: 'Kenia',
     abbreviationTwo: 'KE',
     abbreviationThree: 'KEN',
+  },
+  {
+    name: 'Kirgizstán',
+    abbreviationTwo: 'KG',
+    abbreviationThree: 'KGZ',
   },
   {
     name: 'Kiribati',
@@ -465,9 +655,9 @@ const countries = [
     abbreviationThree: 'KWT',
   },
   {
-    name: 'Kyrgyzstan',
-    abbreviationTwo: 'KG',
-    abbreviationThree: 'KGZ',
+    name: 'Líbano',
+    abbreviationTwo: 'LB',
+    abbreviationThree: 'LBN',
   },
   {
     name: 'Laos',
@@ -475,19 +665,14 @@ const countries = [
     abbreviationThree: 'LAO',
   },
   {
-    name: 'Latvia',
-    abbreviationTwo: 'LV',
-    abbreviationThree: 'LVA',
-  },
-  {
-    name: 'Lebanon',
-    abbreviationTwo: 'LB',
-    abbreviationThree: 'LBN',
-  },
-  {
-    name: 'Lesotho',
+    name: 'Lesoto',
     abbreviationTwo: 'LS',
     abbreviationThree: 'LSO',
+  },
+  {
+    name: 'Letonia',
+    abbreviationTwo: 'LV',
+    abbreviationThree: 'LVA',
   },
   {
     name: 'Liberia',
@@ -495,7 +680,7 @@ const countries = [
     abbreviationThree: 'LBR',
   },
   {
-    name: 'Libya',
+    name: 'Libia',
     abbreviationTwo: 'LY',
     abbreviationThree: 'LBY',
   },
@@ -505,14 +690,34 @@ const countries = [
     abbreviationThree: 'LIE',
   },
   {
-    name: 'Lithuania',
+    name: 'Lituania',
     abbreviationTwo: 'LT',
     abbreviationThree: 'LTU',
   },
   {
-    name: 'Luxembourg',
+    name: 'Luxemburgo',
     abbreviationTwo: 'LU',
     abbreviationThree: 'LUX',
+  },
+  {
+    name: 'México',
+    abbreviationTwo: 'MX',
+    abbreviationThree: 'MEX',
+  },
+  {
+    name: 'Mónaco',
+    abbreviationTwo: 'MC',
+    abbreviationThree: 'MCO',
+  },
+  {
+    name: 'Macao',
+    abbreviationTwo: 'MO',
+    abbreviationThree: 'MAC',
+  },
+  {
+    name: 'Macedônia',
+    abbreviationTwo: 'MK',
+    abbreviationThree: 'MKD',
   },
   {
     name: 'Madagascar',
@@ -520,19 +725,14 @@ const countries = [
     abbreviationThree: 'MDG',
   },
   {
-    name: 'Malawi',
-    abbreviationTwo: 'MW',
-    abbreviationThree: 'MWI',
-  },
-  {
-    name: 'Malaysia',
+    name: 'Malasia',
     abbreviationTwo: 'MY',
     abbreviationThree: 'MYS',
   },
   {
-    name: 'Maldives',
-    abbreviationTwo: 'MV',
-    abbreviationThree: 'MDV',
+    name: 'Malawi',
+    abbreviationTwo: 'MW',
+    abbreviationThree: 'MWI',
   },
   {
     name: 'Mali',
@@ -545,14 +745,19 @@ const countries = [
     abbreviationThree: 'MLT',
   },
   {
-    name: 'Marshall Islands',
-    abbreviationTwo: 'MH',
-    abbreviationThree: 'MHL',
+    name: 'Marruecos',
+    abbreviationTwo: 'MA',
+    abbreviationThree: 'MAR',
   },
   {
-    name: 'Martinique',
+    name: 'Martinica',
     abbreviationTwo: 'MQ',
     abbreviationThree: 'MTQ',
+  },
+  {
+    name: 'Mauricio',
+    abbreviationTwo: 'MU',
+    abbreviationThree: 'MUS',
   },
   {
     name: 'Mauritania',
@@ -560,19 +765,9 @@ const countries = [
     abbreviationThree: 'MRT',
   },
   {
-    name: 'Mauritius',
-    abbreviationTwo: 'MU',
-    abbreviationThree: 'MUS',
-  },
-  {
     name: 'Mayotte',
     abbreviationTwo: 'YT',
     abbreviationThree: 'MYT',
-  },
-  {
-    name: 'Mexico',
-    abbreviationTwo: 'MX',
-    abbreviationThree: 'MEX',
   },
   {
     name: 'Micronesia',
@@ -580,14 +775,9 @@ const countries = [
     abbreviationThree: 'FSM',
   },
   {
-    name: 'Moldova',
+    name: 'Moldavia',
     abbreviationTwo: 'MD',
     abbreviationThree: 'MDA',
-  },
-  {
-    name: 'Monaco',
-    abbreviationTwo: 'MC',
-    abbreviationThree: 'MCO',
   },
   {
     name: 'Mongolia',
@@ -600,19 +790,14 @@ const countries = [
     abbreviationThree: 'MNE',
   },
   {
-    name: 'Morocco',
-    abbreviationTwo: 'MA',
-    abbreviationThree: 'MAR',
+    name: 'Montserrat',
+    abbreviationTwo: 'MS',
+    abbreviationThree: 'MSR',
   },
   {
     name: 'Mozambique',
     abbreviationTwo: 'MZ',
     abbreviationThree: 'MOZ',
-  },
-  {
-    name: 'Myanmar',
-    abbreviationTwo: 'MM',
-    abbreviationThree: 'MMR',
   },
   {
     name: 'Namibia',
@@ -630,16 +815,6 @@ const countries = [
     abbreviationThree: 'NPL',
   },
   {
-    name: 'Netherlands',
-    abbreviationTwo: 'NL',
-    abbreviationThree: 'NLD',
-  },
-  {
-    name: 'New Zealand',
-    abbreviationTwo: 'NZ',
-    abbreviationThree: 'NZL',
-  },
-  {
     name: 'Nicaragua',
     abbreviationTwo: 'NI',
     abbreviationThree: 'NIC',
@@ -655,27 +830,37 @@ const countries = [
     abbreviationThree: 'NGA',
   },
   {
-    name: 'North Korea',
-    abbreviationTwo: 'KP',
-    abbreviationThree: 'PRK',
+    name: 'Niue',
+    abbreviationTwo: 'NU',
+    abbreviationThree: 'NIU',
   },
   {
-    name: 'North Macedonia',
-    abbreviationTwo: 'MK',
-    abbreviationThree: 'MKD',
-  },
-  {
-    name: 'Norway',
+    name: 'Noruega',
     abbreviationTwo: 'NO',
     abbreviationThree: 'NOR',
   },
   {
-    name: 'Oman',
+    name: 'Nueva Caledonia',
+    abbreviationTwo: 'NC',
+    abbreviationThree: 'NCL',
+  },
+  {
+    name: 'Nueva Zelanda',
+    abbreviationTwo: 'NZ',
+    abbreviationThree: 'NZL',
+  },
+  {
+    name: 'Omán',
     abbreviationTwo: 'OM',
     abbreviationThree: 'OMN',
   },
   {
-    name: 'Pakistan',
+    name: 'Países Bajos',
+    abbreviationTwo: 'NL',
+    abbreviationThree: 'NLD',
+  },
+  {
+    name: 'Pakistán',
     abbreviationTwo: 'PK',
     abbreviationThree: 'PAK',
   },
@@ -685,17 +870,17 @@ const countries = [
     abbreviationThree: 'PLW',
   },
   {
-    name: 'Palestine',
+    name: 'Palestina',
     abbreviationTwo: 'PS',
     abbreviationThree: 'PSE',
   },
   {
-    name: 'Panama',
+    name: 'Panamá',
     abbreviationTwo: 'PA',
     abbreviationThree: 'PAN',
   },
   {
-    name: 'Papua New Guinea',
+    name: 'Papúa Nueva Guinea',
     abbreviationTwo: 'PG',
     abbreviationThree: 'PNG',
   },
@@ -705,17 +890,17 @@ const countries = [
     abbreviationThree: 'PRY',
   },
   {
-    name: 'Peru',
+    name: 'Perú',
     abbreviationTwo: 'PE',
     abbreviationThree: 'PER',
   },
   {
-    name: 'Philippines',
-    abbreviationTwo: 'PH',
-    abbreviationThree: 'PHL',
+    name: 'Polinesia Francesa',
+    abbreviationTwo: 'PF',
+    abbreviationThree: 'PYF',
   },
   {
-    name: 'Poland',
+    name: 'Polonia',
     abbreviationTwo: 'PL',
     abbreviationThree: 'POL',
   },
@@ -735,44 +920,49 @@ const countries = [
     abbreviationThree: 'QAT',
   },
   {
-    name: 'Republic of the Congo',
-    abbreviationTwo: 'CG',
-    abbreviationThree: 'COG',
+    name: 'Reino Unido',
+    abbreviationTwo: 'GB',
+    abbreviationThree: 'GBR',
   },
   {
-    name: 'Reunion',
+    name: 'República Centroafricana',
+    abbreviationTwo: 'CF',
+    abbreviationThree: 'CAF',
+  },
+  {
+    name: 'República Checa',
+    abbreviationTwo: 'CZ',
+    abbreviationThree: 'CZE',
+  },
+  {
+    name: 'República Dominicana',
+    abbreviationTwo: 'DO',
+    abbreviationThree: 'DOM',
+  },
+  {
+    name: 'Reunión',
     abbreviationTwo: 'RE',
     abbreviationThree: 'REU',
   },
   {
-    name: 'Romania',
-    abbreviationTwo: 'RO',
-    abbreviationThree: 'ROU',
-  },
-  {
-    name: 'Russia',
-    abbreviationTwo: 'RU',
-    abbreviationThree: 'RUS',
-  },
-  {
-    name: 'Rwanda',
+    name: 'Ruanda',
     abbreviationTwo: 'RW',
     abbreviationThree: 'RWA',
   },
   {
-    name: 'Saint Kitts and Nevis',
-    abbreviationTwo: 'KN',
-    abbreviationThree: 'KNA',
+    name: 'Rumanía',
+    abbreviationTwo: 'RO',
+    abbreviationThree: 'ROU',
   },
   {
-    name: 'Saint Lucia',
-    abbreviationTwo: 'LC',
-    abbreviationThree: 'LCA',
+    name: 'Rusia',
+    abbreviationTwo: 'RU',
+    abbreviationThree: 'RUS',
   },
   {
-    name: 'Saint Vincent and the Grenadines',
-    abbreviationTwo: 'VC',
-    abbreviationThree: 'VCT',
+    name: 'Sahara Occidental',
+    abbreviationTwo: 'EH',
+    abbreviationThree: 'ESH',
   },
   {
     name: 'Samoa',
@@ -780,19 +970,54 @@ const countries = [
     abbreviationThree: 'WSM',
   },
   {
+    name: 'Samoa Americana',
+    abbreviationTwo: 'AS',
+    abbreviationThree: 'ASM',
+  },
+  {
+    name: 'San Bartolomé',
+    abbreviationTwo: 'BL',
+    abbreviationThree: 'BLM',
+  },
+  {
+    name: 'San Cristóbal y Nieves',
+    abbreviationTwo: 'KN',
+    abbreviationThree: 'KNA',
+  },
+  {
     name: 'San Marino',
     abbreviationTwo: 'SM',
     abbreviationThree: 'SMR',
   },
   {
-    name: 'Sao Tome and Principe',
-    abbreviationTwo: 'ST',
-    abbreviationThree: 'STP',
+    name: 'San Martín (Francia)',
+    abbreviationTwo: 'MF',
+    abbreviationThree: 'MAF',
   },
   {
-    name: 'Saudi Arabia',
-    abbreviationTwo: 'SA',
-    abbreviationThree: 'SAU',
+    name: 'San Pedro y Miquelón',
+    abbreviationTwo: 'PM',
+    abbreviationThree: 'SPM',
+  },
+  {
+    name: 'San Vicente y las Granadinas',
+    abbreviationTwo: 'VC',
+    abbreviationThree: 'VCT',
+  },
+  {
+    name: 'Santa Elena',
+    abbreviationTwo: 'SH',
+    abbreviationThree: 'SHN',
+  },
+  {
+    name: 'Santa Lucía',
+    abbreviationTwo: 'LC',
+    abbreviationThree: 'LCA',
+  },
+  {
+    name: 'Santo Tomé y Príncipe',
+    abbreviationTwo: 'ST',
+    abbreviationThree: 'STP',
   },
   {
     name: 'Senegal',
@@ -810,29 +1035,19 @@ const countries = [
     abbreviationThree: 'SYC',
   },
   {
-    name: 'Sierra Leone',
+    name: 'Sierra Leona',
     abbreviationTwo: 'SL',
     abbreviationThree: 'SLE',
   },
   {
-    name: 'Singapore',
+    name: 'Singapur',
     abbreviationTwo: 'SG',
     abbreviationThree: 'SGP',
   },
   {
-    name: 'Slovakia',
-    abbreviationTwo: 'SK',
-    abbreviationThree: 'SVK',
-  },
-  {
-    name: 'Slovenia',
-    abbreviationTwo: 'SI',
-    abbreviationThree: 'SVN',
-  },
-  {
-    name: 'Solomon Islands',
-    abbreviationTwo: 'SB',
-    abbreviationThree: 'SLB',
+    name: 'Siria',
+    abbreviationTwo: 'SY',
+    abbreviationThree: 'SYR',
   },
   {
     name: 'Somalia',
@@ -840,64 +1055,59 @@ const countries = [
     abbreviationThree: 'SOM',
   },
   {
-    name: 'South Africa',
-    abbreviationTwo: 'ZA',
-    abbreviationThree: 'ZAF',
-  },
-  {
-    name: 'South Korea',
-    abbreviationTwo: 'KR',
-    abbreviationThree: 'KOR',
-  },
-  {
-    name: 'South Sudan',
-    abbreviationTwo: 'SS',
-    abbreviationThree: 'SSD',
-  },
-  {
-    name: 'Spain',
-    abbreviationTwo: 'ES',
-    abbreviationThree: 'ESP',
-  },
-  {
-    name: 'Sri Lanka',
+    name: 'Sri lanka',
     abbreviationTwo: 'LK',
     abbreviationThree: 'LKA',
   },
   {
-    name: 'Sudan',
+    name: 'Sudáfrica',
+    abbreviationTwo: 'ZA',
+    abbreviationThree: 'ZAF',
+  },
+  {
+    name: 'Sudán',
     abbreviationTwo: 'SD',
     abbreviationThree: 'SDN',
   },
   {
-    name: 'Suriname',
-    abbreviationTwo: 'SR',
-    abbreviationThree: 'SUR',
-  },
-  {
-    name: 'Sweden',
+    name: 'Suecia',
     abbreviationTwo: 'SE',
     abbreviationThree: 'SWE',
   },
   {
-    name: 'Switzerland',
+    name: 'Suiza',
     abbreviationTwo: 'CH',
     abbreviationThree: 'CHE',
   },
   {
-    name: 'Syria',
-    abbreviationTwo: 'SY',
-    abbreviationThree: 'SYR',
+    name: 'Surinám',
+    abbreviationTwo: 'SR',
+    abbreviationThree: 'SUR',
   },
   {
-    name: 'Taiwan',
-    abbreviationTwo: 'TW',
-    abbreviationThree: 'TWN',
+    name: 'Svalbard y Jan Mayen',
+    abbreviationTwo: 'SJ',
+    abbreviationThree: 'SJM',
   },
   {
-    name: 'Tajikistan',
+    name: 'Swazilandia',
+    abbreviationTwo: 'SZ',
+    abbreviationThree: 'SWZ',
+  },
+  {
+    name: 'Tadjikistán',
     abbreviationTwo: 'TJ',
     abbreviationThree: 'TJK',
+  },
+  {
+    name: 'Tailandia',
+    abbreviationTwo: 'TH',
+    abbreviationThree: 'THA',
+  },
+  {
+    name: 'Taiwán',
+    abbreviationTwo: 'TW',
+    abbreviationThree: 'TWN',
   },
   {
     name: 'Tanzania',
@@ -905,12 +1115,17 @@ const countries = [
     abbreviationThree: 'TZA',
   },
   {
-    name: 'Thailand',
-    abbreviationTwo: 'TH',
-    abbreviationThree: 'THA',
+    name: 'Territorio Británico del Océano Índico',
+    abbreviationTwo: 'IO',
+    abbreviationThree: 'IOT',
   },
   {
-    name: 'Timor-Leste',
+    name: 'Territorios Australes y Antárticas Franceses',
+    abbreviationTwo: 'TF',
+    abbreviationThree: 'ATF',
+  },
+  {
+    name: 'Timor Oriental',
     abbreviationTwo: 'TL',
     abbreviationThree: 'TLS',
   },
@@ -920,29 +1135,34 @@ const countries = [
     abbreviationThree: 'TGO',
   },
   {
+    name: 'Tokelau',
+    abbreviationTwo: 'TK',
+    abbreviationThree: 'TKL',
+  },
+  {
     name: 'Tonga',
     abbreviationTwo: 'TO',
     abbreviationThree: 'TON',
   },
   {
-    name: 'Trinidad and Tobago',
+    name: 'Trinidad y Tobago',
     abbreviationTwo: 'TT',
     abbreviationThree: 'TTO',
   },
   {
-    name: 'Tunisia',
+    name: 'Tunez',
     abbreviationTwo: 'TN',
     abbreviationThree: 'TUN',
   },
   {
-    name: 'Turkey',
-    abbreviationTwo: 'TR',
-    abbreviationThree: 'TUR',
-  },
-  {
-    name: 'Turkmenistan',
+    name: 'Turkmenistán',
     abbreviationTwo: 'TM',
     abbreviationThree: 'TKM',
+  },
+  {
+    name: 'Turquía',
+    abbreviationTwo: 'TR',
+    abbreviationThree: 'TUR',
   },
   {
     name: 'Tuvalu',
@@ -950,29 +1170,14 @@ const countries = [
     abbreviationThree: 'TUV',
   },
   {
-    name: 'Uganda',
-    abbreviationTwo: 'UG',
-    abbreviationThree: 'UGA',
-  },
-  {
-    name: 'Ukraine',
+    name: 'Ucrania',
     abbreviationTwo: 'UA',
     abbreviationThree: 'UKR',
   },
   {
-    name: 'United Arab Emirates',
-    abbreviationTwo: 'AE',
-    abbreviationThree: 'ARE',
-  },
-  {
-    name: 'United Kingdom',
-    abbreviationTwo: 'GB',
-    abbreviationThree: 'GBR',
-  },
-  {
-    name: 'United States',
-    abbreviationTwo: 'US',
-    abbreviationThree: 'USA',
+    name: 'Uganda',
+    abbreviationTwo: 'UG',
+    abbreviationThree: 'UGA',
   },
   {
     name: 'Uruguay',
@@ -980,7 +1185,7 @@ const countries = [
     abbreviationThree: 'URY',
   },
   {
-    name: 'Uzbekistan',
+    name: 'Uzbekistán',
     abbreviationTwo: 'UZ',
     abbreviationThree: 'UZB',
   },
@@ -988,11 +1193,6 @@ const countries = [
     name: 'Vanuatu',
     abbreviationTwo: 'VU',
     abbreviationThree: 'VUT',
-  },
-  {
-    name: 'Vatican City',
-    abbreviationTwo: 'VA',
-    abbreviationThree: 'VAT',
   },
   {
     name: 'Venezuela',
@@ -1005,9 +1205,9 @@ const countries = [
     abbreviationThree: 'VNM',
   },
   {
-    name: 'Western Sahara',
-    abbreviationTwo: 'EH',
-    abbreviationThree: 'ESH',
+    name: 'Wallis y Futuna',
+    abbreviationTwo: 'WF',
+    abbreviationThree: 'WLF',
   },
   {
     name: 'Yemen',
@@ -1015,12 +1215,17 @@ const countries = [
     abbreviationThree: 'YEM',
   },
   {
+    name: 'Yibuti',
+    abbreviationTwo: 'DJ',
+    abbreviationThree: 'DJI',
+  },
+  {
     name: 'Zambia',
     abbreviationTwo: 'ZM',
     abbreviationThree: 'ZMB',
   },
   {
-    name: 'Zimbabwe',
+    name: 'Zimbabue',
     abbreviationTwo: 'ZW',
     abbreviationThree: 'ZWE',
   },

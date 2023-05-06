@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
+
+// adding utc helpers to date handler package
+dayjs.extend(utc);
 
 @Injectable()
 export class PatientService {
@@ -36,12 +41,13 @@ export class PatientService {
     if (patient) {
       return {
         id: patient.id,
-        name: `${patient.firstName} ${patient.lastName}`,
+        firstName: patient.firstName,
+        lastName: patient.lastName,
         dateOfBirth: patient.dateOfBirth || '',
         email: patient.email,
         status: patient.status,
-        phoneNumbers: patient.phoneNumbers,
-        addresses: patient.addresses,
+        phone: patient.phoneNumbers,
+        address: patient.addresses,
       };
     }
     return null;
@@ -89,7 +95,8 @@ export class PatientService {
     const formattedPersons = persons.map((person) => {
       return {
         id: person.id,
-        name: `${person.firstName} ${person.lastName}`,
+        firstName: person.firstName,
+        lastName: person.lastName,
         dateOfBirth: person.dateOfBirth || '',
         email: person.email,
         status: person.status,
@@ -103,17 +110,29 @@ export class PatientService {
 
   async createPatient(data) {
     const patientCleanData = Object.assign({}, data);
+    const phoneCleanData = Object.assign({}, data.phone);
+    const addressCleanData = Object.assign({}, data.address);
+
+    // delete fields that are not necessary
+    delete patientCleanData.id;
     delete patientCleanData.phone;
     delete patientCleanData.address;
+    delete phoneCleanData.id;
+    delete addressCleanData.id;
 
-    const person = await this.prisma.person.create({ data: patientCleanData });
+    const person = await this.prisma.person.create({
+      data: {
+        ...patientCleanData,
+        dateOfBirth: dayjs(patientCleanData.dateOfBirth).utc().toJSON(),
+      },
+    });
 
     await this.prisma.address.create({
-      data: { ...data.address, personId: person.id },
+      data: { ...addressCleanData, personId: person.id },
     });
 
     await this.prisma.phoneNumber.create({
-      data: { ...data.phone, personId: person.id },
+      data: { ...phoneCleanData, personId: person.id },
     });
 
     return this.getPatient({ id: person.id });
