@@ -1,28 +1,61 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  UseFilters,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { DoctorService } from './doctor.service';
 import { DoctorCreateInput, DoctorWithSpecialties } from 'src/types';
+import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 
 @Controller('doctors')
+@UseFilters(new HttpExceptionFilter())
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
-  @UseGuards(AuthGuard)
-  @Get(':id')
-  async getDoctorById(@Param('id') id: string): Promise<DoctorWithSpecialties> {
-    return this.doctorService.getDoctor({ id: id });
+  @Get('simplified')
+  async findManyWithBasicInfo() {
+    try {
+      return this.doctorService.getDoctorsBasicInfo();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
+  @UseGuards(AuthGuard)
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<DoctorWithSpecialties> {
+    try {
+      return this.doctorService.getDoctor({ id: id });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  @UseGuards(AuthGuard)
   @Get()
-  async getDoctorsList(): Promise<DoctorWithSpecialties[]> {
-    return this.doctorService.getDoctors({ where: { status: 'active' } });
+  async findMany(): Promise<DoctorWithSpecialties[]> {
+    try {
+      return this.doctorService.getDoctors({ where: { status: 'active' } });
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
   @UseGuards(AuthGuard)
   @Post()
-  async createDoctor(
+  async create(
     @Body() personData: DoctorCreateInput,
   ): Promise<DoctorWithSpecialties> {
-    return this.doctorService.createDoctor(personData);
+    try {
+      return this.doctorService.createDoctor(personData);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 }

@@ -7,7 +7,7 @@ import { Service, ServicesWithSpecialties } from 'src/types';
 export class ServiceService {
   constructor(private prisma: PrismaService) {}
 
-  async services(params: {
+  async getServices(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.ServiceWhereUniqueInput;
@@ -88,4 +88,8 @@ export class ServiceService {
     );
     return specialtiesWithDoctorAndServicesData;
   }
+
+  // async createService(data) {
+
+  // }
 }

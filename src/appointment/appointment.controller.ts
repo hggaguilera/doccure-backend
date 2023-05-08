@@ -7,8 +7,10 @@ import {
   Body,
   UseFilters,
   InternalServerErrorException,
+  UseGuards,
 } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { AppointmentService } from './appointment.service';
 import {
   Appointment,
@@ -21,10 +23,17 @@ import {
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
+  @Get('dates')
+  async findManyByDoctorAndDate() {
+    try {
+      return await this.appointmentService.getSimpleAppointments();
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
   @Post()
-  async createAppointment(
-    @Body() data: AppointmentInput,
-  ): Promise<Appointment> {
+  async create(@Body() data: AppointmentInput): Promise<Appointment> {
     try {
       return await this.appointmentService.createAppointment(data);
     } catch (error) {
@@ -32,33 +41,36 @@ export class AppointmentController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  async getDoctorsList(): Promise<Appointment[]> {
+  async findMany(): Promise<Appointment[]> {
     try {
       return await this.appointmentService.getAppointments({});
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
-  async getAppointmentById(@Param('id') id: string): Promise<Appointment> {
+  async findOne(@Param('id') id: string): Promise<Appointment> {
     try {
       return await this.appointmentService.getAppointment({ id: id });
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  async updateAppointment(
+  async update(
     @Param('id') id: string,
     @Body() data: AppointmentUpdateInput,
   ): Promise<Appointment> {
     try {
       return await this.appointmentService.updateAppointment({ id: id }, data);
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
     }
   }
 }

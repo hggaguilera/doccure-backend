@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
-import { Specialties } from 'src/types';
+import { Specialties, Specialty } from 'src/types';
 
 @Injectable()
 export class SpecialtyService {
@@ -29,5 +29,23 @@ export class SpecialtyService {
         status: true,
       },
     });
+  }
+
+  async createSpecialty(data: Specialty) {
+    const specialty = await this.prisma.specialty.create({
+      data: {
+        specialtyName: data.name,
+        specialtyDescription: data.description,
+      },
+    });
+    return specialty;
+  }
+
+  async updateSpecialty(id: string, status: 'active' | 'inactive') {
+    const specialty = await this.prisma.specialty.update({
+      where: { id },
+      data: { status },
+    });
+    return specialty;
   }
 }

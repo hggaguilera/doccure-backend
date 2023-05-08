@@ -163,6 +163,25 @@ export class AppointmentService {
     return data;
   }
 
+  async getSimpleAppointments() {
+    const appointments = await this.prisma.appointment.findMany({
+      include: {
+        doctor: { include: { person: true } },
+      },
+    });
+
+    const data = appointments.map((appointment) => {
+      const doctorName = `${appointment.doctor.person.firstName} ${appointment.doctor.person.lastName}`;
+
+      return {
+        doctor: doctorName,
+        date: appointment.date,
+      };
+    });
+
+    return data;
+  }
+
   async getAppointment(
     appointmentId: Prisma.AppointmentWhereUniqueInput,
   ): Promise<Appointment> {

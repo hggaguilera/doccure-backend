@@ -3,6 +3,7 @@ import { PrismaService } from '../services/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
+import { Patient, PatientUpdate } from 'src/types';
 
 // adding utc helpers to date handler package
 dayjs.extend(utc);
@@ -42,6 +43,7 @@ export class PatientService {
       return {
         id: patient.id,
         firstName: patient.firstName,
+        middleName: patient.middleName,
         lastName: patient.lastName,
         dateOfBirth: patient.dateOfBirth || '',
         email: patient.email,
@@ -96,6 +98,7 @@ export class PatientService {
       return {
         id: person.id,
         firstName: person.firstName,
+        middleName: person.middleName,
         lastName: person.lastName,
         dateOfBirth: person.dateOfBirth || '',
         email: person.email,
@@ -108,17 +111,14 @@ export class PatientService {
     return formattedPersons;
   }
 
-  async createPatient(data) {
+  async createPatient(data: Patient) {
     const patientCleanData = Object.assign({}, data);
     const phoneCleanData = Object.assign({}, data.phone);
     const addressCleanData = Object.assign({}, data.address);
 
     // delete fields that are not necessary
-    delete patientCleanData.id;
     delete patientCleanData.phone;
     delete patientCleanData.address;
-    delete phoneCleanData.id;
-    delete addressCleanData.id;
 
     const person = await this.prisma.person.create({
       data: {
@@ -127,14 +127,54 @@ export class PatientService {
       },
     });
 
-    await this.prisma.address.create({
-      data: { ...addressCleanData, personId: person.id },
-    });
+    await this.addOrUpdateAddress(person.id, addressCleanData);
 
-    await this.prisma.phoneNumber.create({
-      data: { ...phoneCleanData, personId: person.id },
-    });
+    await this.addOrUpdatePhoneNumber(person.id, phoneCleanData);
 
     return this.getPatient({ id: person.id });
+  }
+
+  async updatePatient(id: string, data: PatientUpdate) {
+    const patient = Object.assign({}, data);
+
+    if (data.hasOwnProperty('phone')) {
+      delete patient.phone;
+      console.log(data.phone);
+      await this.addOrUpdatePhoneNumber(id, data.phone);
+    }
+
+    if (data.hasOwnProperty('address')) {
+      delete patient.address;
+      await this.addOrUpdateAddress(id, data.address);
+    }
+
+    await this.prisma.person.update({
+      where: { id },
+      data: { ...patient },
+    });
+
+    return this.getPatient({ id });
+  }
+
+  private async addOrUpdatePhoneNumber(personId, data) {
+    console.log('data', { ...data });
+    await this.prisma.phoneNumber.upsert({
+      where: {
+        personId,
+      },
+      update: { ...data },
+      create: { ...data, personId },
+    });
+  }
+
+  private async addOrUpdateAddress(personId, data) {
+    console.log(data);
+    await this.prisma.address.upsert({
+      where: {
+        personId,
+      },
+      update: { ...data },
+      create: { ...data, personId },
+    });
   }
 }

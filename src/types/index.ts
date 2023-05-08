@@ -101,3 +101,51 @@ export interface AppointmentDetails {
   hour: string;
   doctor: string;
 }
+
+export interface Patient {
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  dateOfBirth: string | Date;
+  email?: string;
+  phone: {
+    isPrimary: 'yes' | 'no';
+    type: 'mobile' | 'home' | 'work' | 'other';
+    countryCode: string;
+    phoneNumber: string;
+  };
+  address: {
+    countryId: string;
+    addressLineOne: string;
+    addressLineTwo?: string;
+    stateOrCity: string;
+    townOrMunicipality: string;
+    zipCode?: string;
+  };
+}
+
+export interface PatientUpdate {
+  middleName?: string;
+  dateOfBirth?: string | Date;
+  email?: string;
+  status?: 'active' | 'inactive';
+  phone?: {
+    isPrimary?: 'yes' | 'no';
+    type: 'mobile' | 'home' | 'work' | 'other';
+    countryCode: string;
+    phoneNumber: string;
+  };
+  address?: {
+    countryId: string;
+    addressLineOne: string;
+    addressLineTwo?: string;
+    stateOrCity: string;
+    townOrMunicipality: string;
+    zipCode?: string;
+  };
+}
+
+export type Specialty = {
+  name: string;
+  description: string;
+};

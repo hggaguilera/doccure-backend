@@ -92,6 +92,36 @@ export class DoctorService {
     return doctorsWithSpecialties;
   }
 
+  async getDoctorsBasicInfo() {
+    const doctors = await this.prisma.doctor.findMany({
+      where: { status: 'active' },
+      include: {
+        person: true,
+        specializations: {
+          include: {
+            specialty: true,
+          },
+        },
+      },
+    });
+
+    const doctorsWithSpecialties = doctors.map((doctor) => {
+      const specialties = doctor.specializations.map(
+        (specialty) => specialty?.specialty?.specialtyName,
+      );
+      return {
+        id: doctor.id,
+        prefix: doctor?.prefix,
+        firstName: doctor?.person?.firstName,
+        lastName: doctor?.person?.lastName,
+        email: doctor?.person?.email,
+        specialty: specialties[specialties.length - 1],
+      };
+    });
+
+    return doctorsWithSpecialties;
+  }
+
   async createDoctor(data: DoctorCreateInput) {
     const doctorCleanInput = Object.assign({}, data);
     delete doctorCleanInput.prefix;
