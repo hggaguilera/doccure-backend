@@ -16,6 +16,7 @@ import { PatientModule } from './patient/patient.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { AuthModule } from './auth/auth.module';
 import { CountryModule } from './country/country.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { CountryModule } from './country/country.module';
     InvoiceModule,
     AuthModule,
     CountryModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

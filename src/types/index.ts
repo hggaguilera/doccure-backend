@@ -94,3 +94,10 @@ export type UserLogin = {
   username: string;
   password: string;
 };
+
+export interface AppointmentDetails {
+  name: string;
+  date: string;
+  hour: string;
+  doctor: string;
+}

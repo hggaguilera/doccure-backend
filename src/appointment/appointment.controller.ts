@@ -28,7 +28,7 @@ export class AppointmentController {
     try {
       return await this.appointmentService.createAppointment(data);
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(error);
     }
   }
 

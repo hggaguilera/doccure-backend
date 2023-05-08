@@ -4,11 +4,14 @@ import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { DoctorService } from 'src/doctor/doctor.service';
+import { MailService } from 'src/mail/mail.service';
 import {
   Appointment,
   AppointmentInput,
   AppointmentUpdateInput,
 } from '../types';
+
+import 'dayjs/locale/es';
 
 // adding utc helpers to date handler package
 dayjs.extend(utc);
@@ -18,6 +21,7 @@ export class AppointmentService {
   constructor(
     private prisma: PrismaService,
     private doctorService: DoctorService,
+    private mailService: MailService,
   ) {}
 
   async createAppointment(data: AppointmentInput): Promise<Appointment> {
@@ -87,8 +91,6 @@ export class AppointmentService {
       };
     }
 
-    // await this.prisma
-
     appointment = await this.prisma.appointment.create({
       data: {
         personId: person.id,
@@ -97,6 +99,18 @@ export class AppointmentService {
         date: dayjs(data.date).utc().toJSON(),
       },
     });
+
+    await this.mailService.sendAppointmentConfirmation(
+      {
+        name: patientName,
+        date: dayjs(appointment.date)
+          .locale('es')
+          .format('D [de] MM [de] YYYY'),
+        hour: dayjs(appointment.date).format('hh:mm A'),
+        doctor: doctorName,
+      },
+      person.email,
+    );
 
     return {
       id: appointment.id,
