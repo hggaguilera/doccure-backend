@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
-import { Service, ServicesWithSpecialties } from 'src/types';
+import {
+  Service,
+  ServicesWithSpecialties,
+  ServiceInput,
+  ServiceUpdateInput,
+} from 'src/types';
 
 @Injectable()
 export class ServiceService {
@@ -89,7 +94,74 @@ export class ServiceService {
     return specialtiesWithDoctorAndServicesData;
   }
 
-  // async createService(data) {
+  async createService(data: ServiceInput) {
+    const service = await this.prisma.service.create({
+      data: {
+        serviceName: data.serviceName,
+        serviceDescription: data.serviceDescription,
+        price: data.price,
+      },
+    });
 
-  // }
+    await this.prisma.specialtyServices.create({
+      data: { specialtyId: data.specialtyId, serviceId: service.id },
+    });
+
+    return {
+      serviceName: service.serviceName,
+      serviceDescription: service.serviceDescription,
+      price: service.price,
+      createdAt: service.createdAt,
+    };
+  }
+
+  async updateService(id: string, data: ServiceUpdateInput) {
+    const service = Object.assign({}, data);
+
+    if (data.hasOwnProperty('oldSpecialtyId')) {
+      delete service.specialtyId;
+      delete service.oldSpecialtyId;
+
+      await this.prisma.specialtyServices.update({
+        where: {
+          specialtyId_serviceId: {
+            serviceId: id,
+            specialtyId: data.oldSpecialtyId,
+          },
+        },
+        data: { specialtyId: data.specialtyId },
+      });
+    }
+
+    if (
+      data.hasOwnProperty('specialtyId') &&
+      !data.hasOwnProperty('oldSpecialtyId')
+    ) {
+      delete service.specialtyId;
+    }
+
+    await this.prisma.service.update({
+      where: { id },
+      data: { ...service },
+    });
+
+    return await this.getService({ id });
+  }
+
+  async getService(serviceId: Prisma.ServiceWhereUniqueInput) {
+    const service = await this.prisma.service.findUnique({
+      where: serviceId,
+    });
+
+    const specialty = await this.prisma.specialtyServices.findFirst({
+      where: { serviceId: service.id },
+    });
+
+    return {
+      serviceName: service.serviceName,
+      serviceDescription: service.serviceDescription,
+      price: service.price,
+      specialtyId: specialty.specialtyId,
+    };
+  }
 }

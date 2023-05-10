@@ -139,7 +139,6 @@ export class PatientService {
 
     if (data.hasOwnProperty('phone')) {
       delete patient.phone;
-      console.log(data.phone);
       await this.addOrUpdatePhoneNumber(id, data.phone);
     }
 

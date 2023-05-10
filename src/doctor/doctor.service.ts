@@ -1,12 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../services/prisma/prisma.service';
+import { MailService } from 'src/mail/mail.service';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { Prisma } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
-import { DoctorCreateInput, DoctorWithSpecialties } from '../types';
+import {
+  DoctorCreateInput,
+  DoctorWithSpecialties,
+  DoctorUpdateInput,
+} from '../types';
 
 @Injectable()
 export class DoctorService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private mailService: MailService,
+    private config: ConfigService,
+    private jwtService: JwtService,
+  ) {}
 
   async getDoctor(
     doctorWhereUniqueInput: Prisma.DoctorWhereUniqueInput,
@@ -126,20 +137,34 @@ export class DoctorService {
     const doctorCleanInput = Object.assign({}, data);
     delete doctorCleanInput.prefix;
     delete doctorCleanInput.address;
-    delete doctorCleanInput.phoneNumber;
+    delete doctorCleanInput.phone;
     delete doctorCleanInput.specialties;
 
     const person = await this.prisma.person.create({
       data: doctorCleanInput,
     });
 
-    if (person.isSystemUser === true) {
-      const temporaryPassword = Math.random().toString(36).slice(-8);
-      const passwordHashed = await bcrypt.hash(temporaryPassword, 10);
+    const doctor = await this.prisma.doctor.create({
+      data: { personId: person.id, prefix: data.prefix },
+    });
 
-      await this.prisma.user.create({
-        data: { personId: person.id, password: passwordHashed },
-      });
+    if (person.isSystemUser === true) {
+      const baseUrl = this.config.get('CLIENT_BASE_URL');
+
+      const payload = {
+        username: person.email,
+        name: `${person.firstName} ${person.lastName}`,
+        sub: person.id,
+      };
+      const token = await this.jwtService.signAsync(payload);
+
+      await this.mailService.sendWelcomeEmail(
+        {
+          name: `${person.firstName} ${person.lastName}`,
+          url: `${baseUrl}/auth/confirm?token=${token}`,
+        },
+        person.email,
+      );
     }
 
     await this.prisma.address.create({
@@ -147,11 +172,7 @@ export class DoctorService {
     });
 
     await this.prisma.phoneNumber.create({
-      data: { ...data.phoneNumber, personId: person.id },
-    });
-
-    const doctor = await this.prisma.doctor.create({
-      data: { personId: person.id, prefix: data.prefix },
+      data: { ...data.phone, personId: person.id },
     });
 
     for (const specialty of data?.specialties) {
@@ -163,10 +184,40 @@ export class DoctorService {
     return this.getDoctor({ id: doctor.id });
   }
 
-  // async updateDoctor(data: DoctorUpdateInput) {
-  //   await this.prisma.address.update({
-  //     where: { id: data.address.id },
-  //     data: data.address,
-  //   });
-  // }
+  async updateDoctor(id: string, data: DoctorUpdateInput) {
+    const person = Object.assign({}, data);
+
+    if (data.hasOwnProperty('address')) {
+      delete person.address;
+      await this.prisma.address.update({
+        where: { personId: id },
+        data: { ...data.address },
+      });
+    }
+
+    if (data.hasOwnProperty('phone')) {
+      delete person.phone;
+      await this.prisma.phoneNumber.update({
+        where: { personId: id },
+        data: { ...data.phone },
+      });
+    }
+
+    if (data.hasOwnProperty('specialties')) {
+      delete person.specialties;
+      const doctor = await this.prisma.doctor.findUnique({
+        where: { personId: id },
+      });
+
+      for (const specialty of data.specialties) {
+        await this.prisma.doctorsWithSpecialties.create({
+          data: { doctorId: doctor.id, specialtyId: specialty },
+        });
+      }
+    }
+
+    await this.prisma.person.update({ where: { id }, data: { ...person } });
+
+    return await this.getDoctor({ personId: id });
+  }
 }

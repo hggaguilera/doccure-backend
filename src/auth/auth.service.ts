@@ -8,24 +8,47 @@ import { UserLogin } from 'src/types';
 export class AuthService {
   constructor(private jwtService: JwtService, private prisma: PrismaService) {}
 
-  async generateToken(login: UserLogin): Promise<string> {
+  async generateToken(login: UserLogin): Promise<string | null> {
     const doctor = await this.prisma.person.findUnique({
       where: { email: login.username },
-      select: { id: true, firstName: true, lastName: true },
+      select: { id: true, firstName: true, lastName: true, isSystemUser: true },
     });
 
     const user = await this.prisma.user.findUnique({
       where: { personId: doctor.id },
     });
 
-    if (this.checkPassword(login.password, user.password)) {
+    const passwordsMatched = this.checkPassword(login.password, user.password);
+
+    if (doctor.isSystemUser && passwordsMatched) {
       const payload = {
         username: login.username,
         name: `${doctor.firstName} ${doctor.lastName}`,
         sub: user.id,
       };
+
       return this.jwtService.signAsync(payload);
     }
+
+    return null;
+  }
+
+  async createPassword(username: string, password: string) {
+    const person = await this.prisma.person.findUnique({
+      where: { email: username },
+    });
+
+    const user = await this.prisma.user.create({
+      data: {
+        personId: person.id,
+        password,
+      },
+    });
+
+    if (user) {
+      return 'Password has been created';
+    }
+    return null;
   }
 
   private async checkPassword(

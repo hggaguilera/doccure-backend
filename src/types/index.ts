@@ -8,16 +8,16 @@ export type DoctorCreateInput = {
   isSystemUser?: boolean;
   prefix: string;
   address: Prisma.AddressCreateManyInput;
-  phoneNumber: Prisma.PhoneNumberCreateManyInput;
+  phone: Prisma.PhoneNumberCreateManyInput;
   specialties: string[];
 };
 
 export type DoctorUpdateInput = {
   email?: string;
   isSystemUser?: boolean;
-  address: Prisma.AddressUpdateInput;
-  phoneNumber: Prisma.PhoneNumberCreateManyInput;
-  specialties: string[];
+  address?: Prisma.AddressUpdateInput;
+  phone?: Prisma.PhoneNumberUpdateInput;
+  specialties?: string[];
 };
 
 export type DoctorWithSpecialties = {
@@ -46,11 +46,12 @@ export type ServicesWithSpecialties = {
   status: 'active' | 'inactive';
 };
 
-export type Specialties = {
+export type Specialty = {
   id: string;
   specialtyName: string;
   specialtyDescription: string;
   status: 'active' | 'inactive';
+  createdAt: string | Date;
 };
 
 export type AppointmentInput = {
@@ -102,6 +103,11 @@ export interface AppointmentDetails {
   doctor: string;
 }
 
+export interface WelcomeDetails {
+  name: string;
+  url: string;
+}
+
 export interface Patient {
   firstName: string;
   lastName: string;
@@ -145,7 +151,30 @@ export interface PatientUpdate {
   };
 }
 
-export type Specialty = {
+export type SpecialtyInput = {
   name: string;
   description: string;
 };
+
+export interface SpecialtyUpdateInput {
+  specialtyName?: string;
+  specialtyDescription?: string;
+  status?: 'active' | 'inactive';
+  isDeleted?: boolean;
+}
+
+export type ServiceInput = {
+  specialtyId: string;
+  serviceName: string;
+  serviceDescription: string;
+  price: number;
+};
+
+export interface ServiceUpdateInput {
+  oldSpecialtyId?: string;
+  specialtyId?: string;
+  serviceName?: string;
+  serviceDescription?: string;
+  price?: number;
+  status?: 'active' | 'inactive';
+}

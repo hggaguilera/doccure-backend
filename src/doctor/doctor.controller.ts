@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Body,
   Param,
   UseGuards,
@@ -10,7 +11,11 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { DoctorService } from './doctor.service';
-import { DoctorCreateInput, DoctorWithSpecialties } from 'src/types';
+import {
+  DoctorCreateInput,
+  DoctorUpdateInput,
+  DoctorWithSpecialties,
+} from 'src/types';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 
 @Controller('doctors')
@@ -54,6 +59,19 @@ export class DoctorController {
   ): Promise<DoctorWithSpecialties> {
     try {
       return this.doctorService.createDoctor(personData);
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() data: DoctorUpdateInput,
+  ): Promise<DoctorWithSpecialties> {
+    try {
+      return this.doctorService.updateDoctor(id, data);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
