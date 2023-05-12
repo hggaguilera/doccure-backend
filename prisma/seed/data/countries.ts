@@ -1,3 +1,5 @@
+import IDS from './_constants';
+
 const countries = [
   {
     name: 'Afganistán',
@@ -815,6 +817,7 @@ const countries = [
     abbreviationThree: 'NPL',
   },
   {
+    id: IDS.COUNTRIES.NICARAGUA,
     name: 'Nicaragua',
     abbreviationTwo: 'NI',
     abbreviationThree: 'NIC',

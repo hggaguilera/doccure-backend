@@ -5,6 +5,7 @@ export type DoctorCreateInput = {
   middleName?: string;
   lastName: string;
   email?: string;
+  dateOfBirth: string;
   isSystemUser?: boolean;
   prefix: string;
   address: Prisma.AddressCreateManyInput;
@@ -18,6 +19,7 @@ export type DoctorUpdateInput = {
   address?: Prisma.AddressUpdateInput;
   phone?: Prisma.PhoneNumberUpdateInput;
   specialties?: string[];
+  status?: 'active' | 'inactive';
 };
 
 export type DoctorWithSpecialties = {
@@ -115,8 +117,8 @@ export interface Patient {
   dateOfBirth: string | Date;
   email?: string;
   phone: {
-    isPrimary: 'yes' | 'no';
-    type: 'mobile' | 'home' | 'work' | 'other';
+    isPrimary?: 'yes' | 'no';
+    type?: 'mobile' | 'home' | 'work' | 'other';
     countryCode: string;
     phoneNumber: string;
   };
@@ -137,7 +139,7 @@ export interface PatientUpdate {
   status?: 'active' | 'inactive';
   phone?: {
     isPrimary?: 'yes' | 'no';
-    type: 'mobile' | 'home' | 'work' | 'other';
+    type?: 'mobile' | 'home' | 'work' | 'other';
     countryCode: string;
     phoneNumber: string;
   };

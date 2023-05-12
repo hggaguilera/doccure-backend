@@ -105,7 +105,7 @@ export class AppointmentService {
         name: patientName,
         date: dayjs(appointment.date)
           .locale('es')
-          .format('D [de] MMM [de] YYYY'),
+          .format('D [de] MMMM [de] YYYY'),
         hour: dayjs(appointment.date).format('hh:mm A'),
         doctor: doctorName,
       },

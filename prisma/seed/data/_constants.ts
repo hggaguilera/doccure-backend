@@ -46,6 +46,9 @@ const IDS = {
     AESTHETIC_DENTAL_RESTORATIONS: '5c5e5ed9-5e5d-425e-a3d2-33403a238b98',
     ADVANCED_DENTAL_IMPLANTS: '8fcb4f37-4f4f-4f4f-81b1-93f94d33f02a',
   },
+  COUNTRIES: {
+    NICARAGUA: '86a95fa9-4711-4e3b-8ede-f0ef9bad7bc6',
+  },
 };
 
 export default IDS;

@@ -4,11 +4,16 @@ import { MailService } from 'src/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Prisma } from '@prisma/client';
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
 import {
   DoctorCreateInput,
   DoctorWithSpecialties,
   DoctorUpdateInput,
 } from '../types';
+import IDS from 'prisma/seed/data/_constants';
+
+dayjs.extend(utc);
 
 @Injectable()
 export class DoctorService {
@@ -19,13 +24,29 @@ export class DoctorService {
     private jwtService: JwtService,
   ) {}
 
-  async getDoctor(
-    doctorWhereUniqueInput: Prisma.DoctorWhereUniqueInput,
-  ): Promise<DoctorWithSpecialties | null> {
+  async getDoctor(doctorWhereUniqueInput: Prisma.DoctorWhereUniqueInput) {
     const doctor = await this.prisma.doctor.findUnique({
       where: doctorWhereUniqueInput,
       include: {
-        person: true,
+        person: {
+          include: {
+            phoneNumbers: {
+              select: {
+                countryCode: true,
+                phoneNumber: true,
+              },
+            },
+            addresses: {
+              select: {
+                addressLineOne: true,
+                addressLineTwo: true,
+                townOrMunicipality: true,
+                stateOrCity: true,
+                zipCode: true,
+              },
+            },
+          },
+        },
         specializations: {
           include: {
             specialty: true,
@@ -36,21 +57,20 @@ export class DoctorService {
 
     if (doctor) {
       const specialties = doctor.specializations.map(
-        (specialty) => specialty?.specialty?.specialtyName,
+        (specialty) => specialty?.specialty?.id,
       );
 
       return {
-        id: doctor?.id,
-        personId: doctor?.personId,
-        prefix: doctor?.prefix,
-        firstName: doctor?.person?.firstName,
-        middleName: doctor?.person?.middleName,
-        lastName: doctor?.person?.lastName,
-        email: doctor?.person?.email,
-        isSystemUser: doctor?.person?.isSystemUser,
-        status: doctor?.status,
-        createdAt: doctor?.createdAt,
-        specializations: specialties,
+        prefix: doctor.prefix,
+        firstName: doctor.person.firstName,
+        middleName: doctor.person.middleName,
+        lastName: doctor.person.lastName,
+        dateOfBirth: doctor.person.dateOfBirth,
+        email: doctor.person.email,
+        isSystemUser: doctor.person.isSystemUser,
+        phone: doctor.person.phoneNumbers,
+        address: doctor.person.addresses,
+        specialties,
       };
     }
     return null;
@@ -83,7 +103,7 @@ export class DoctorService {
 
     const doctorsWithSpecialties = doctors.map((doctor) => {
       const specialties = doctor.specializations.map(
-        (specialty) => specialty?.specialty?.specialtyName,
+        (specialty) => specialty?.specialty?.id,
       );
       return {
         id: doctor?.id,
@@ -141,14 +161,17 @@ export class DoctorService {
     delete doctorCleanInput.specialties;
 
     const person = await this.prisma.person.create({
-      data: doctorCleanInput,
+      data: {
+        ...doctorCleanInput,
+        dateOfBirth: dayjs(doctorCleanInput.dateOfBirth).utc().toJSON(),
+      },
     });
 
     const doctor = await this.prisma.doctor.create({
       data: { personId: person.id, prefix: data.prefix },
     });
 
-    if (person.isSystemUser === true) {
+    if (person.isSystemUser) {
       const baseUrl = this.config.get('CLIENT_BASE_URL');
 
       const payload = {
@@ -168,7 +191,11 @@ export class DoctorService {
     }
 
     await this.prisma.address.create({
-      data: { ...data.address, personId: person.id },
+      data: {
+        ...data.address,
+        personId: person.id,
+        countryId: IDS.COUNTRIES.NICARAGUA,
+      },
     });
 
     await this.prisma.phoneNumber.create({
@@ -216,7 +243,37 @@ export class DoctorService {
       }
     }
 
-    await this.prisma.person.update({ where: { id }, data: { ...person } });
+    if (data.hasOwnProperty('status')) {
+      await this.prisma.doctor.update({
+        where: { personId: id },
+        data: { status: data.status },
+      });
+    }
+
+    const doctor = await this.prisma.person.update({
+      where: { id },
+      data: { ...person },
+    });
+
+    if (data.hasOwnProperty('isSystemUser') && data.isSystemUser) {
+      const baseUrl = this.config.get('CLIENT_BASE_URL');
+
+      const payload = {
+        username: doctor.email,
+        name: `${doctor.firstName} ${doctor.lastName}`,
+        sub: id,
+      };
+      const token = await this.jwtService.signAsync(payload);
+
+      await this.mailService.sendWelcomeEmail(
+        {
+          name: `${doctor.firstName} ${doctor.lastName}`,
+          url: `${baseUrl}/auth/confirm?token=${token}`,
+        },
+        doctor.email,
+      );
+      console.log('email was send');
+    }
 
     return await this.getDoctor({ personId: id });
   }

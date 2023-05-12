@@ -34,7 +34,7 @@ export class DoctorController {
 
   @UseGuards(AuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<DoctorWithSpecialties> {
+  async findOne(@Param('id') id: string) {
     try {
       return this.doctorService.getDoctor({ id: id });
     } catch (error) {
@@ -46,7 +46,7 @@ export class DoctorController {
   @Get()
   async findMany(): Promise<DoctorWithSpecialties[]> {
     try {
-      return this.doctorService.getDoctors({ where: { status: 'active' } });
+      return this.doctorService.getDoctors({});
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -54,9 +54,7 @@ export class DoctorController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(
-    @Body() personData: DoctorCreateInput,
-  ): Promise<DoctorWithSpecialties> {
+  async create(@Body() personData: DoctorCreateInput) {
     try {
       return this.doctorService.createDoctor(personData);
     } catch (error) {
@@ -66,10 +64,7 @@ export class DoctorController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() data: DoctorUpdateInput,
-  ): Promise<DoctorWithSpecialties> {
+  async update(@Param('id') id: string, @Body() data: DoctorUpdateInput) {
     try {
       return this.doctorService.updateDoctor(id, data);
     } catch (error) {

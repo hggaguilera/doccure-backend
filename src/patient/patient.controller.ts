@@ -12,6 +12,7 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
+import { PrismaService } from 'src/services/prisma/prisma.service';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Patient, PatientUpdate } from 'src/types';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
@@ -19,7 +20,10 @@ import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter
 @Controller('patients')
 @UseFilters(new HttpExceptionFilter())
 export class PatientController {
-  constructor(private readonly patientService: PatientService) {}
+  constructor(
+    private readonly patientService: PatientService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @UseGuards(AuthGuard)
   @Get(':id')
@@ -67,10 +71,10 @@ export class PatientController {
   async update(@Param('id') id: string, @Body() data: PatientUpdate) {
     try {
       if (data.hasOwnProperty('email')) {
-        const existingPerson = await this.patientService.getPatient({
-          email: data.email,
+        const existingPerson = await this.prisma.person.findUnique({
+          where: { email: data.email },
         });
-        if (existingPerson) {
+        if (existingPerson.id !== id) {
           throw new ConflictException('Person with email already exist');
         }
       }

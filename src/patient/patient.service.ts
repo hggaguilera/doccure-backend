@@ -18,7 +18,6 @@ export class PatientService {
       include: {
         phoneNumbers: {
           select: {
-            id: true,
             isPrimary: true,
             type: true,
             countryCode: true,
@@ -27,7 +26,6 @@ export class PatientService {
         },
         addresses: {
           select: {
-            id: true,
             countryId: true,
             addressLineOne: true,
             addressLineTwo: true,
@@ -41,7 +39,6 @@ export class PatientService {
 
     if (patient) {
       return {
-        id: patient.id,
         firstName: patient.firstName,
         middleName: patient.middleName,
         lastName: patient.lastName,
@@ -73,7 +70,6 @@ export class PatientService {
       include: {
         phoneNumbers: {
           select: {
-            id: true,
             isPrimary: true,
             type: true,
             countryCode: true,
@@ -82,7 +78,6 @@ export class PatientService {
         },
         addresses: {
           select: {
-            id: true,
             countryId: true,
             addressLineOne: true,
             addressLineTwo: true,
@@ -147,9 +142,15 @@ export class PatientService {
       await this.addOrUpdateAddress(id, data.address);
     }
 
+    if (data.hasOwnProperty('dateOfBirth')) {
+      patient.dateOfBirth = dayjs(data.dateOfBirth).utc().toJSON();
+    }
+
     await this.prisma.person.update({
       where: { id },
-      data: { ...patient },
+      data: {
+        ...patient,
+      },
     });
 
     return this.getPatient({ id });
