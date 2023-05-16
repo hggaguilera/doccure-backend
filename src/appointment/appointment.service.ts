@@ -200,9 +200,10 @@ export class AppointmentService {
     return {
       id: appointment.id,
       doctor: doctorName,
-      doctorEmail: appointment.doctor.person.email,
       patient: patientName,
+      patientId: appointment.person.id,
       service: appointment.service.serviceName,
+      servicePrice: appointment.service.price,
       date: appointment.date,
       status: appointment.status,
     };

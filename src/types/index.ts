@@ -77,9 +77,11 @@ export type Service = {
 export type Appointment = {
   id: string;
   doctor: string;
-  doctorEmail: string;
+  doctorEmail?: string;
   patient: string;
+  patientId?: string;
   service: string;
+  servicePrice?: number;
   date: string | Date;
   status: string;
   message?: string;
@@ -179,4 +181,21 @@ export interface ServiceUpdateInput {
   serviceDescription?: string;
   price?: number;
   status?: 'active' | 'inactive';
+}
+
+export interface InvoiceInput {
+  summary?: string;
+  date: string | Date;
+  tax: number;
+  personId: string;
+  appointmentId: string;
+  items: {
+    createMany: {
+      data: {
+        service: string;
+        quantity: number;
+        price: number;
+      }[];
+    };
+  };
 }

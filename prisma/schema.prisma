@@ -83,7 +83,7 @@ model Person {
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
   // Child Relationships
-  invoices     Invoice[]     @relation(name: "Invoice.clientId")
+  invoices     Invoice[]     @relation(name: "Invoice.personId")
   appointments Appointment[] @relation(name: "Appointment.personId")
   addresses    Address?      @relation(name: "Address.personId")
   phoneNumbers PhoneNumber?  @relation(name: "PhoneNumber.personId")
@@ -249,14 +249,15 @@ model Invoice {
   // Standarized Prefix Fields
   id            String        @id @default(uuid())
   // Model Specific Fields
-  number        String        @unique
+  number        Int           @default(autoincrement())
+  customId      String?       @unique
+  personId      String        @unique @map("person_id")
+  appointmentId String        @unique @map("appointment_id")
   summary       String?
   date          DateTime
   tax           Float
-  clientId      String        @map("client_id")
-  appointmentId String        @unique @map("appointment_id")
   // Parent Relationships
-  client        Person        @relation(name: "Invoice.clientId", fields: [clientId], references: [id], onDelete: Cascade)
+  person        Person        @relation(name: "Invoice.personId", fields: [personId], references: [id], onDelete: Cascade)
   appointment   Appointment   @relation(name: "Invoice.appointmentId", fields: [appointmentId], references: [id], onDelete: Cascade)
   // Child Relationships
   items         InvoiceItem[] @relation(name: "InvoiceItem.invoiceId")
@@ -267,6 +268,9 @@ model InvoiceItem {
   id        String  @id @default(uuid())
   // Model Specific Fields
   invoiceId String  @map("invoice_id")
+  service   String
+  quantity  Int
+  price     Float
   // Parent Relationships
   invoice   Invoice @relation(name: "InvoiceItem.invoiceId", fields: [invoiceId], references: [id], onDelete: Cascade)
 }
